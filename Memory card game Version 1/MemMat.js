@@ -1,49 +1,29 @@
 var hasclicked;
 var cardOne, cardTwo;
 var cardOneVal, cardTwoVal, cardOneID, cardTwoID;
-
 function disappearCardOne () {
     document.getElementById(cardOneID).style.display = "none";
-
 }
-
 function disappearCardTwo () {
     document.getElementById(cardTwoID).style.display = "none";
 
 }
-
 function hideCardOne() {
     document.getElementById(cardOneID).src = "./200w.gif";
 }
-
 function hideCardTwo() {
     document.getElementById(cardTwoID).src = "./200w.gif";
 }
-
 function image (x) {
     var cell = {
-        1: "./candy.png",
-        2: "./cottoncandy.png",
-        3: "./lolipop.png",
-        4: "./marsh.png",
-        5: "./jelly.png",
-        6: "./corn.png",
-        7: "./choco.webp",
-        8: "./mint.png",
-        9: "./corn.png",
-        10: "./lolipop.png",
-        11: "./jelly.png",
-        12: "./marsh.png",
-        13: "./cottoncandy.png",
-        14: "./candy.png",
-        15: "./mint.png",
-        16: "./choco.webp"
+        1: "./candy.png", 2: "./cottoncandy.png", 3: "./lolipop.png", 4: "./marsh.png",
+        5: "./jelly.png", 6: "./corn.png", 7: "./choco.webp", 8: "./mint.png",
+        9: "./corn.png", 10: "./lolipop.png", 11: "./jelly.png", 12: "./marsh.png",
+        13: "./cottoncandy.png", 14: "./candy.png", 15: "./mint.png", 16: "./choco.webp"
     }
-    
     var clcard = 'img-'+ x; //to get the current HTML element by the Id using  string concatenation.
     document.getElementById(clcard).src = cell[x]; //current image value is stored in cell[x];
     console.log(hasclicked); 
-
     if(!hasclicked ){
         hasclicked = true;
         cardOne = x; //current card's key 
