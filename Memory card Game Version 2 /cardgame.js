@@ -20,17 +20,18 @@ function rowncol() {
         createTable();
         count++;
         console.log(count);
+        if(count == 1) {
+            document.getElementById("btn").onclick = null;
+        }
     }
 
-    else if(count==2){
-         
-    }
+
 }
 
 function createTable() {
     let candyImgs = ['./apple.png', './bubtea.webp', './cheesecake.webp','./candy.png', './chicken.png', './chococake.png', './burger.webp', './corn.png', 
-    './choco.webp', './cupcake.png', './donut.png', './eggs.png','./frsalad.png', './icecream.png', './macaroon.png', './soup.png', './shake.png',
-    './samosa.webp', './sandwich.png','./watmel.png', './toff.png','./cottoncandy.png', './pastta.png', './pizza.png', './taco.png', ,
+    './choco.webp', './cupcake.png', './donut.png', './eggs.png','./frsalad.png', './icecream.png', './macaroon.png', './soup.png', './shake.png', './Tencoco.png',
+    './samosa.webp', './sandwich.png','./watmel.png', './toff.png','./cottoncandy.png', './pastta.png', './pizza.png', './taco.png',
     './popcorn.png', './jelly.png','./lolipop.png', './marsh.png', './mint.png', './cane.png', './heartcandy.png', './fries.png'];
     var RPairImgs = [];
     candyImgs.length = (rno*cno)/2;
