@@ -1,13 +1,6 @@
-// let candyimgs = ['./candy.png', './corn.png', './choco.webp', './cottoncandy.png', './jelly.png','./lolipop.png', './heartcandy.png', './cane.png', './mint.png', './marsh.png', 
-// './candy.png', './corn.png', './choco.webp', './cottoncandy.png', './jelly.png','./lolipop.png', './heartcandy.png', './cane.png', './mint.png', './marsh.png'  ];
-var arrNo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-
-var cno, rno, colcell, rowcell;
-var imgpos, x;
-let max = (rno*cno)/2;
-let min =1;
-var table = document.querySelector("tbody");
-
+var cno, rno, colcell, rowcell, img;
+var imgpos, hasClicked, n;
+var count = 0;
 
 function rowncol() {
     rno = document.getElementById("rno").value;
@@ -25,43 +18,77 @@ function rowncol() {
         console.log(rno);
         console.log(cno);
         createTable();
+        count++;
+        console.log(count);
     }
 
+    else if(count==2){
+         
+    }
 }
 
 function createTable() {
-    for(var r=0;r<(rno);r++)
+    let candyImgs = ['./apple.png', './bubtea.webp', './cheesecake.webp','./candy.png', './chicken.png', './chococake.png', './burger.webp', './corn.png', 
+    './choco.webp', './cupcake.png', './donut.png', './eggs.png','./frsalad.png', './icecream.png', './macaroon.png', './soup.png', './shake.png',
+    './samosa.webp', './sandwich.png','./watmel.png', './toff.png','./cottoncandy.png', './pastta.png', './pizza.png', './taco.png', ,
+    './popcorn.png', './jelly.png','./lolipop.png', './marsh.png', './mint.png', './cane.png', './heartcandy.png', './fries.png'];
+    var RPairImgs = [];
+    candyImgs.length = (rno*cno)/2;
+    RPairImgs.length = (rno*cno)/2;
+    RPairImgs = [].concat(...Array(2).fill(candyImgs));
+    RPairImgs.sort( () => 0.5 - Math.random() );
+    console.log(RPairImgs);
+
+    n = 0;
+    for(var r=0; r<(rno);r++)
     {
      rowcell = document.getElementById('container').insertRow(r);
-     rowcell.setAttribute('class', 'cell-cont' );
+     rowcell.setAttribute('class', 'cell-cont');
      for(var c=0;c<(cno);c++)  
-      {
-        colcell =  rowcell.insertCell(c);
-        colcell.setAttribute('class', 'cell' );
-        colcell.setAttribute('id', 'cell'+r+c );
-        
-        // colcell.value= r+ " " + c; 
-        // imgpos = colcell.value;
-        // colcell.innerHTML = imgpos; 
-        // for(i=min; i<=max; i++) {
-        //     var display = arrNo[i];
-        //     document.getElementById("check").innerHTML = display;
-        // }
-        
-        var Rnum = arrNo[Math.floor(Math.random() * arrNo.length)];
-        colcell.innerHTML= Rnum;
-        // var cube = document.querySelectorAll('.cell');
-        // cube.forEach(function(){
-        //     x = Math.floor(Math.random() * (max) +min);
-        //     colcell.innerHTML = x;
-        // });
-       }
+        {
+            colcell =  rowcell.insertCell(c);
+            colcell.setAttribute('class', 'cell' );
+            colcell.setAttribute('id', 'cell'+r+c );
+            img = document.createElement('img');
+            img.src = RPairImgs[n];
+            colcell.appendChild(img);
+            img.setAttribute('class', 'Hid-img');    
+            img.setAttribute('id', 'RI-'+n);
+            n++;
+        }
     }
 }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function randomElement() {
+//     var arrNo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+//     arrNo.sort()
+// }
 
 
 

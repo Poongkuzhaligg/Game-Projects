@@ -17,9 +17,9 @@ function hideCardTwo() {
 function image (x) {
     var cell = {
         1: "./candy.png", 2: "./cottoncandy.png", 3: "./lolipop.png", 4: "./marsh.png",
-        5: "./jelly.png", 6: "./corn.png", 7: "./choco.webp", 8: "./mint.png",
+        5: "./cottoncandy.png", 6: "./candy.png", 7: "./mint.png", 8: "./choco.webp",
         9: "./corn.png", 10: "./lolipop.png", 11: "./jelly.png", 12: "./marsh.png",
-        13: "./cottoncandy.png", 14: "./candy.png", 15: "./mint.png", 16: "./choco.webp"
+        13: "./jelly.png", 14: "./corn.png", 15: "./choco.webp", 16: "./mint.png"
     }
     var clcard = 'img-'+ x; //to get the current HTML element by the Id using  string concatenation.
     document.getElementById(clcard).src = cell[x]; //current image value is stored in cell[x];
