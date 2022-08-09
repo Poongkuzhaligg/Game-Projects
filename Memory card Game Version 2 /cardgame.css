@@ -1,5 +1,7 @@
-*{
+body{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-image: linear-gradient(to top, rgb(178, 201, 213), rgb(255, 255, 255));
+    height: fit-content;
 }
 
 #heading {

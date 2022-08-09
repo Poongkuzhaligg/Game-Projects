@@ -5,8 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minesweeper</title>
+    <link rel="stylesheet" href="./MS.css">
 </head>
 <body>
-    
+    <h1 id="heading">MINESWEEPER</h1>
+    <label for ="rows" class="LableRC" id="roww">Enter the rows : </label>
+    <input type="number" class="InputRC"  name="rows" id ="rno" > 
+    <label for ="columns" class="LableRC" id="col">Enter the columns : </label>
+    <input type="number" class="InputRC" name="column" id ="cno" >
+    <label for ="bombs" class="LableRC" id="bomb">Enter the number of bombs : </label>
+    <input type="number" class="InputRC" name="Bombs" id ="bmb" >
+    <button type="submit" class="button" id="btn" onclick="makeTable()">SUBMIT</button>
+    <section>
+        <table id="boxCont" border="1" ></table>
+    </section>
 </body>
-</html>
+<script src="./MS.js"></script>
+</html> 
