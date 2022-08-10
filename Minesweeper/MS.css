@@ -1,7 +1,11 @@
 #boxCont{
     margin: auto;
-    margin-top: 20px;
+    margin-top: 40px;
     background-color: rgb(180, 180, 180);
+}
+
+.cell-cont{
+    border: 1px solid rgb(0, 0, 0);
 }
 
 .cell {
@@ -9,4 +13,10 @@
     max-width: 15px;
     height: 30px;
     background-color: rgb(191, 191, 191);
+}
+
+.cell-btn {
+    width: 30px;
+    height: 30px;
+    
 }

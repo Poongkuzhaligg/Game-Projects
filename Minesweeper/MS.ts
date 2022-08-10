@@ -1,22 +1,49 @@
 var r:any, c:any;
-var colcell:HTMLTableCellElement;
-var rno = (<HTMLInputElement>document.getElementById("rno")).value;
-var cno = (<HTMLInputElement>document.getElementById("cno")).value;
-var button:HTMLButtonElement;
+
+var rowno = <HTMLInputElement>document.getElementById("rno");
+var colno = <HTMLInputElement>document.getElementById("cno");
+var bomb = <HTMLInputElement>document.getElementById("btn");
+var colcel:HTMLTableCellElement;
+var bt:HTMLButtonElement;
+var putB:string;
+var Ar:string[];
+var emAr:string[];
 
 function makeTable() {
-    for(r=0; r<(rno);r++)
+   var rno = rowno.value;
+   var cno = colno.value;
+    console.log(rno, cno);
+    for(r=0; r< rno; r++)
     {
-        var rowcell = (<HTMLTableElement>document.getElementById('boxCont')).insertRow(r);
-        rowcell.setAttribute('class', 'cell-cont');
-        for(c=0; c<(cno) ;c++)  
+        var rowcel = (<HTMLTableElement>document.getElementById("boxCont")).insertRow(r);
+        rowcel.setAttribute('class', 'cell-cont');
+        // rowAr.push(r);
+        for(c=0; c< cno; c++)  
         {
-            colcell =  rowcell.insertCell(c);
-            colcell.setAttribute('class', 'cell' );
-            colcell.setAttribute('id', 'cell'+r+c );
-            button = document.createElement('button');
-            colcell.appendChild(button);
-            button.setAttribute('class', 'button');  
+            colcel = rowcel.insertCell(c);
+            colcel.setAttribute('class', 'cell' );
+            colcel.setAttribute('id', 'cell'+r+c );
+            bt = document.createElement('button');
+            colcel.appendChild(bt);
+            bt.setAttribute('class','cell-btn');
+            
+            setBomb();
         }
+       
     }
 }
+
+function setBomb() {
+    putB = bt.value;
+    putB = r+','+c;
+    console.log(putB);
+    Ar = [];
+    Ar.fill(putB);
+    // console.log(Ar);
+    // emAr = [];
+    // emAr.push(...Array(1).fill(Ar))
+}
+
+
+    
+    

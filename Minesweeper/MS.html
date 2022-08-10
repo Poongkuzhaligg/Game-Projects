@@ -10,15 +10,17 @@
 <body>
     <h1 id="heading">MINESWEEPER</h1>
     <label for ="rows" class="LableRC" id="roww">Enter the rows : </label>
-    <input type="number" class="InputRC"  name="rows" id ="rno" > 
+    <input type="number" class="InputRC"  name="rows" id ="rno" min="1"/> 
     <label for ="columns" class="LableRC" id="col">Enter the columns : </label>
-    <input type="number" class="InputRC" name="column" id ="cno" >
+    <input type="number" class="InputRC" name="column" id ="cno" min="1"/>
     <label for ="bombs" class="LableRC" id="bomb">Enter the number of bombs : </label>
     <input type="number" class="InputRC" name="Bombs" id ="bmb" >
-    <button type="submit" class="button" id="btn" onclick="makeTable()">SUBMIT</button>
+    <button type="button" class="button" id="btn" onclick="makeTable()">SUBMIT</button>
     <section>
-        <table id="boxCont" border="1" ></table>
+        <table id="boxCont" ></table>
     </section>
+    <script src="./MS.js" defer></script>
+
 </body>
-<script src="./MS.js"></script>
 </html> 
+

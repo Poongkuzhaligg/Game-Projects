@@ -61,7 +61,9 @@ function createTable() {
 }
 
 
-
+function reloadgame() {
+    window.location.reload();
+}
 
 
 
