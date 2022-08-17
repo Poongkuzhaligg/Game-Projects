@@ -9,15 +9,21 @@
 </head>
 <body>
     <h1 id="heading">MINESWEEPER</h1>
-    <label for ="rows" class="LableRC" id="roww">Enter the rows : </label>
-    <input type="number" class="InputRC"  name="rows" id ="rno" min="1"/> 
-    <label for ="columns" class="LableRC" id="col">Enter the columns : </label>
-    <input type="number" class="InputRC" name="column" id ="cno" min="1"/>
-    <label for ="bombs" class="LableRC" id="bomb">Enter the number of bombs : </label>
-    <input type="number" class="InputRC" name="Bombs" id ="bmb" >
-    <button type="button" class="button" id="btn" onclick="makeTable()">SUBMIT</button>
+    <section class="lables">
+        <label for ="rows" class="LableRC" id="roww"> Rows : </label>
+        <input type="number" class="InputRC"  name="rows" id ="rno" min="1"/> 
+        <label for ="columns" class="LableRC" id="col"> Columns : </label>
+        <input type="number" class="InputRC" name="column" id ="cno" min="1"/>
+        <label for ="bombs" class="LableRC" id="bomb"> Mines : </label>
+        <input type="number" class="InputRC" name="Bombs" id ="bmb" >
+        <div>
+            <button type="button" class="button" id="btn" onclick="makeTable()">START</button>
+            <button type="button"  class="button" id="reset" onclick="Reset()">RESTART</button>
+        </div>
+    </section>
     <section>
         <table id="boxCont" ></table>
+        <p id="gOver">❌ GAME OVER ❌</p>
     </section>
     <script src="./MS.js" defer></script>
 

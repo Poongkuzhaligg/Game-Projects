@@ -1,6 +1,7 @@
 var cno, rno, colcell, rowcell, img;
 var imgpos, hasClicked, n;
 var count = 0;
+var table = document.getElementById('container');
 
 function rowncol() {
     rno = document.getElementById("rno").value;
@@ -22,6 +23,7 @@ function rowncol() {
         console.log(count);
         if(count == 1) {
             document.getElementById("btn").onclick = null;
+            // table.removeChild(rowcell(r).colcell(c));
         }
     }
 
@@ -43,7 +45,7 @@ function createTable() {
     n = 0;
     for(var r=0; r<(rno);r++)
     {
-     rowcell = document.getElementById('container').insertRow(r);
+     rowcell = table.insertRow(r);
      rowcell.setAttribute('class', 'cell-cont');
      for(var c=0;c<(cno);c++)  
         {
@@ -59,6 +61,12 @@ function createTable() {
         }
     }
 }
+
+
+
+
+
+
 
 
 function reloadgame() {
@@ -86,52 +94,3 @@ function reloadgame() {
 
 
 
-
-
-// function randomElement() {
-//     var arrNo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-//     arrNo.sort()
-// }
-
-
-
-// function hiddenimg () {
-//     colcell.innerHTML = ;
-//     // colcell.style.backgroundImage = candyimgs[Math.floor(Math.random() * candyimgs.length)];
-// }
-
-    // for(var i=1;i<=rno;i++){
-    //     for(var j=1;j<=cno;j++){
-    //         var tag = document.createElement("table");
-    //     }
-    // }
-//     var theader = '<table border="1">\n';
-//     var tbody = '';
-//     for(var i=1; i<= rno; i++) {
-//         tbody += '<tr>';
-
-//         for( var j=1; j<=cno; j++) {
-//             tbody += '<td>';
-//             tbody += 'cell' + i + ',' + j;
-//             tbody += '<td>';
-//         }
-//         tbody += '</tr>\n';
-//     }
-//     var tfooter = '</table>';
-//     document.getElementById('container').innerHTML = theader + tbody + tfooter;
-
-        // var hidimg = document.createElement('img');
-        // // colcell.insertCell(hiddenimg);
-        // colcell.innerHTML = "<img src= './choco.webp' class='hid-img' />" ;
-        // for(var v=0; v< candyimgs.length; v++){
-        //     colcell.innerHTML += "<img src=\"'+candyimgs[i]+'\">";
-        // }
-
-                // var hidimg = document.getElementsByClassName('cell');
-        // hidimg.src = './jelly.png';
-        // append(hiddenimg);
-        // var cube = document.querySelectorAll('.cell');
-        // cube.forEach(function(){
-        //     x = Math.floor(Math.random() * (max) +min);
-        //     colcell.innerHTML = x;
-        // });
