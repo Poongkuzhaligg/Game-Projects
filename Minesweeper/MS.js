@@ -17,7 +17,6 @@ function makeTable() {
             colcell = rowcell.insertCell(c);
             colcell.setAttribute('class', 'cell');
             colcell.setAttribute('id', 'cell' + r + c);
-            // setBombID('cell'+r+c);
             putB = 'cell' + r + c;
             bIDAr.push(putB);
         }
@@ -25,9 +24,6 @@ function makeTable() {
     setBomb();
     setNos();
 }
-// function setBombID(putB:string){
-//     bIDAr.push(putB);
-// }
 function setBomb() {
     var _a;
     console.log(bIDAr);
@@ -39,7 +35,7 @@ function setBomb() {
             if (bombAr.includes(mineID) != true) {
                 bombAr.push(mineID);
                 document.getElementById(mineID).innerHTML = "💣";
-                (_a = document.getElementById(mineID)) === null || _a === void 0 ? void 0 : _a.setAttribute("onclick", "clickBomb()");
+                (_a = document.getElementById(mineID)) === null || _a === void 0 ? void 0 : _a.setAttribute("onclick", "setTimeout(clickBomb,500)");
                 console.log(mineID);
             }
             else {
@@ -59,33 +55,37 @@ function clickBomb() {
     var gameOver = document.getElementById('gOver').style.display = "block";
 }
 function setNos() {
-    var x = 0, y = 0;
-    var initC = document.getElementById('cell' + x + y);
-    console.log(initC);
-    var C1 = document.getElementById('cell' + (x - 1) + (y - 1));
-    var C2 = document.getElementById('cell' + (x - 1) + (y));
-    var C3 = document.getElementById('cell' + (x - 1) + (y + 1));
-    var C4 = document.getElementById('cell' + (x) + (y + 1));
-    var C5 = document.getElementById('cell' + (x + 1) + (y + 1));
-    var C6 = document.getElementById('cell' + (x + 1) + (y));
-    var C7 = document.getElementById('cell' + (x + 1) + (y - 1));
-    var C8 = document.getElementById('cell' + (x) + (y - 1));
     var tds = document.getElementsByTagName("td");
-    // for( let t=0; t<tds.length; t++) {
-    //     if(tds[t].innerHTML =="💣") {
-    //         t++;
-    //     }
-    //     else{
-    //         tds[t].innerHTML = "1" ;
-    //     }
+    var n = 0;
+    // for(let t=0; t<tds.length; t++){
+    // let x = 0, y = 0;
+    for (var x = 0; x < rn; x++) {
+        for (var y = 0; y < cn; y++) {
+            var initC = document.getElementById('cell' + x + y);
+            console.log(initC);
+            if ((initC === null || initC === void 0 ? void 0 : initC.innerHTML) == "💣") {
+                console.log("true");
+            }
+            else {
+                console.log("false");
+            }
+        }
+    }
+    // if(initC?.innerHTML =="💣"){
     // }
-    // if(initC?.innerHTML == '💣'){
-    //     console.log('true');
-    // }
-    // else{
-    //     console.log('false');
-    // }
+    // console.log(x);
+    // console.log(y);
 }
+// }
+// for( let t=0; t<tds.length; t++) {
+//     if(initC?.innerHTML =="💣") {
+//         t++;
+//     }
+//     else{
+//         // tds[t].innerHTML = " ";
+//     }
+//     console.log(n)
+// }
 function Reset() {
     location.reload();
 }
@@ -106,3 +106,11 @@ function Reset() {
 // colcell.appendChild(bt);
 // bt.setAttribute('class','cell-btn');
 // putB = bt.value;
+// let C1 = document.getElementById('cell'+(x-1)+(y-1));
+// let C2 = document.getElementById('cell'+(x-1)+(y));
+// let C3 = document.getElementById('cell'+(x-1)+(y+1));
+// let C4 = document.getElementById('cell'+(x)+(y+1));
+// let C5 = document.getElementById('cell'+(x+1)+(y+1));
+// let C6 = document.getElementById('cell'+(x+1)+(y));
+// let C7 = document.getElementById('cell'+(x+1)+(y-1));
+// let C8 = document.getElementById('cell'+(x)+(y-1));

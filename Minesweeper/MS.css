@@ -32,7 +32,7 @@ body{
     padding: 15px 5px 0px 5px ;
     text-align: center; 
     border: 0px;
-    box-shadow:3px 4px rgba(28, 27, 27, 0.325);
+    box-shadow:3px 4px rgba(24, 24, 24, 0.478);
     color: rgb(167, 14, 14);
     font-weight: 500;
     font-size:x-large;
@@ -50,6 +50,10 @@ body{
     font-size: medium;
     font-weight:bolder ;
     box-shadow:3px 4px rgba(99, 96, 96, 0.325);
+}
+
+.button:hover{
+    background-color: brown;
 }
 
 #boxCont{
