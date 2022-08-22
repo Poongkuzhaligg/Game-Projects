@@ -3,8 +3,10 @@ var rowno = document.getElementById("rno"), colno = document.getElementById("cno
 var colcell, rowcell, bt, initC;
 var bIDAr = [];
 var bombAr = [];
-var rn, cn;
+var rn, cn, count = 0;
 var c1, c2, c3, c4, c5, c6, c7, c8;
+// function checkTable(){
+// }
 function makeTable() {
     var rno = rowno.value;
     var cno = colno.value;
@@ -29,24 +31,18 @@ function setBomb() {
     var _a;
     console.log(bIDAr);
     var Mno = +(bomb.value);
-    if (Mno < (rn * cn)) {
-        for (var i = 0; i < Mno; i++) {
-            var mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
-            if (bombAr.includes(mineID) != true) {
-                bombAr.push(mineID);
-                document.getElementById(mineID).innerHTML = "💣";
-                (_a = document.getElementById(mineID)) === null || _a === void 0 ? void 0 : _a.setAttribute("onclick", "setTimeout(clickBomb,500)");
-                console.log(mineID);
-            }
-            else {
-                i--;
-            }
-            console.log(n);
+    for (var i = 0; i < Mno; i++) {
+        var mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
+        if (bombAr.includes(mineID) != true) {
+            bombAr.push(mineID);
+            document.getElementById(mineID).innerHTML = "💣";
+            (_a = document.getElementById(mineID)) === null || _a === void 0 ? void 0 : _a.setAttribute("onclick", "setTimeout(clickBomb,500)");
+            console.log(mineID);
         }
-    }
-    else {
-        alert("Too much Mines!!");
-        Reset();
+        else {
+            i--;
+        }
+        console.log(n);
     }
 }
 function clickBomb() {
@@ -118,7 +114,8 @@ function Reset() {
 // c8 = 'cell'+(x+1)+""+(y-1);
 // eightCell.push(c1, c2, c3, c4, c5, c6, c7, c8);
 // console.log(eightCell);
-//     else if(document.getElementById(eightCell[cell])!.innerHTML = "💣" )
+//for(let t-0; t<eightCell.length; t++){
+//     if(document.getElementById(eightCell[t])!.innerHTML = "💣" )
 //     {
 //         let Bcount = 0;
 //         Bcount++;

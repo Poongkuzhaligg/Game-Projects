@@ -3,10 +3,12 @@ var rowno = <HTMLInputElement>document.getElementById("rno"), colno = <HTMLInput
 var colcell:HTMLTableCellElement, rowcell:HTMLTableRowElement, bt:HTMLButtonElement, initC:HTMLTableCellElement;
 var bIDAr:string[] = [];
 var bombAr:string[] = [];
-var rn:any, cn:any;
+var rn:any, cn:any, count:number = 0;
 var c1:string, c2: string, c3:string, c4:string, c5:string, c6:string, c7:string, c8:string;
 
+// function checkTable(){
 
+// }
 
 function makeTable() {
     var rno = rowno.value;
@@ -33,7 +35,6 @@ function makeTable() {
 function setBomb(){
     console.log(bIDAr);
     var Mno = +(bomb.value);
-    if(Mno < (rn*cn) ){
         for( let i=0; i<Mno; i++){
             let mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
             if(bombAr.includes(mineID)!= true){
@@ -47,12 +48,9 @@ function setBomb(){
             }
             console.log(n);
         }    
-    }
-    else{
-        alert("Too much Mines!!");
-        Reset();
-    }
 }
+
+
 
 function clickBomb(){
     (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
@@ -119,21 +117,6 @@ function Reset() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     // c1 = 'cell'+(x-1)+""+(y-1);
                     // c2 = 'cell'+(x-1)+""+(y);
                     // c3 = 'cell'+(x-1)+""+(y+1);
@@ -144,7 +127,8 @@ function Reset() {
                     // c8 = 'cell'+(x+1)+""+(y-1);
                     // eightCell.push(c1, c2, c3, c4, c5, c6, c7, c8);
                     // console.log(eightCell);
-                    //     else if(document.getElementById(eightCell[cell])!.innerHTML = "💣" )
+                    //for(let t-0; t<eightCell.length; t++){
+                    //     if(document.getElementById(eightCell[t])!.innerHTML = "💣" )
                     //     {
                     //         let Bcount = 0;
                     //         Bcount++;
