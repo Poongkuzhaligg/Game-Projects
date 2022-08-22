@@ -71,12 +71,11 @@ body{
     min-width: 30px;
     max-width: 15px;
     height: 30px;
-    color: rgb(179, 130, 238);
+    color: rgb(159, 96, 237);
     background-color: rgb(211, 211, 211);
     text-align: center;
     font-size: x-large;
 }
-
 
 #gOver{
     display: none;

@@ -1,9 +1,10 @@
 var r, c, b, n, cellVal, putB;
 var rowno = document.getElementById("rno"), colno = document.getElementById("cno"), bomb = document.getElementById("bmb");
-var colcell, rowcell, bt;
+var colcell, rowcell, bt, initC;
 var bIDAr = [];
 var bombAr = [];
 var rn, cn;
+var c1, c2, c3, c4, c5, c6, c7, c8;
 function makeTable() {
     var rno = rowno.value;
     var cno = colno.value;
@@ -28,7 +29,6 @@ function setBomb() {
     var _a;
     console.log(bIDAr);
     var Mno = +(bomb.value);
-    var n = 0;
     if (Mno < (rn * cn)) {
         for (var i = 0; i < Mno; i++) {
             var mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
@@ -41,7 +41,6 @@ function setBomb() {
             else {
                 i--;
             }
-            n++;
             console.log(n);
         }
     }
@@ -55,27 +54,80 @@ function clickBomb() {
     var gameOver = document.getElementById('gOver').style.display = "block";
 }
 function setNos() {
-    var tds = document.getElementsByTagName("td");
-    var n = 0;
-    // for(let t=0; t<tds.length; t++){
-    // let x = 0, y = 0;
     for (var x = 0; x < rn; x++) {
         for (var y = 0; y < cn; y++) {
-            var initC = document.getElementById('cell' + x + y);
+            initC = document.getElementById('cell' + x + y);
             console.log(initC);
-            if ((initC === null || initC === void 0 ? void 0 : initC.innerHTML) == "💣") {
-                console.log("true");
+            if (initC.innerHTML == "💣") {
+                y + 1;
             }
             else {
-                console.log("false");
+                setNumber(x, y);
             }
         }
     }
-    // if(initC?.innerHTML =="💣"){
-    // }
-    // console.log(x);
-    // console.log(y);
 }
+function setNumber(u, v) {
+    var adjCells = [];
+    if ((u > 0) && (v > 0)) {
+        adjCells.push('cell' + (u - 1) + (v - 1));
+    }
+    if (u > 0) {
+        adjCells.push('cell' + (u - 1) + v);
+    }
+    if ((u > 0) && (v < cn - 1)) {
+        adjCells.push('cell' + (u - 1) + (v + 1));
+    }
+    if (v < cn - 1) {
+        adjCells.push('cell' + u + (v + 1));
+    }
+    if ((u < rn - 1) && (v < cn - 1)) {
+        adjCells.push('cell' + (u + 1) + (v + 1));
+    }
+    if (u < rn - 1) {
+        adjCells.push('cell' + (u + 1) + v);
+    }
+    if ((u < rn - 1) && (v > 0)) {
+        adjCells.push('cell' + (u + 1) + (v - 1));
+    }
+    if (v > 0) {
+        adjCells.push('cell' + u + (v - 1));
+    }
+    console.log(adjCells);
+    var Bcount = 0;
+    for (var t = 0; t < adjCells.length; t++) {
+        var CurrentcellID = adjCells[t];
+        var Currentcell = document.getElementById(CurrentcellID);
+        if ((Currentcell === null || Currentcell === void 0 ? void 0 : Currentcell.innerHTML) == "💣") {
+            Bcount++;
+            var countb = Bcount;
+            initC.innerHTML = countb.toString();
+        }
+    }
+}
+function Reset() {
+    location.reload();
+}
+// c1 = 'cell'+(x-1)+""+(y-1);
+// c2 = 'cell'+(x-1)+""+(y);
+// c3 = 'cell'+(x-1)+""+(y+1);
+// c4 = 'cell'+(x)+""+(y+1);
+// c5 = 'cell'+(x+1)+""+(y+1);
+// c6 = 'cell'+(x-1)+""+(y);
+// c7 = 'cell'+(x+1)+""+(y-1);
+// c8 = 'cell'+(x+1)+""+(y-1);
+// eightCell.push(c1, c2, c3, c4, c5, c6, c7, c8);
+// console.log(eightCell);
+//     else if(document.getElementById(eightCell[cell])!.innerHTML = "💣" )
+//     {
+//         let Bcount = 0;
+//         Bcount++;
+//         let Bnumber:any = Bcount;
+//         initC.innerHTML = Bnumber;
+//     }
+//     else{
+//         initC.innerHTML = " ";
+//     }
 // }
 // for( let t=0; t<tds.length; t++) {
 //     if(initC?.innerHTML =="💣") {
@@ -86,9 +138,6 @@ function setNos() {
 //     }
 //     console.log(n)
 // }
-function Reset() {
-    location.reload();
-}
 //first get 5 random values from array...then place bomb to the inner html of the id or add classlist to it
 // function setArray() {
 //     emAr.push(putB);

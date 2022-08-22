@@ -1,9 +1,10 @@
 var r:any, c:any, b:any, n:any, cellVal:any, putB:string;
 var rowno = <HTMLInputElement>document.getElementById("rno"), colno = <HTMLInputElement>document.getElementById("cno"), bomb = <HTMLInputElement>document.getElementById("bmb");
-var colcell:HTMLTableCellElement, rowcell:HTMLTableRowElement, bt:HTMLButtonElement;
+var colcell:HTMLTableCellElement, rowcell:HTMLTableRowElement, bt:HTMLButtonElement, initC:HTMLTableCellElement;
 var bIDAr:string[] = [];
 var bombAr:string[] = [];
 var rn:any, cn:any;
+var c1:string, c2: string, c3:string, c4:string, c5:string, c6:string, c7:string, c8:string;
 
 
 
@@ -30,9 +31,8 @@ function makeTable() {
 }
 
 function setBomb(){
-    console.log(bIDAr)
+    console.log(bIDAr);
     var Mno = +(bomb.value);
-    let n = 0
     if(Mno < (rn*cn) ){
         for( let i=0; i<Mno; i++){
             let mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
@@ -45,7 +45,6 @@ function setBomb(){
             else{
                 i--;
             }
-            n++;
             console.log(n);
         }    
     }
@@ -61,49 +60,59 @@ function clickBomb(){
 }
 
 function setNos(){
-     
-    let tds = document.getElementsByTagName("td");
-    let n = 0;
-    // for(let t=0; t<tds.length; t++){
-        // let x = 0, y = 0;
-        for(let x=0; x<rn; x++){
-            for(let y=0; y<cn; y++ ){
-                let initC =<HTMLTableCellElement>document.getElementById('cell'+x+y);
-                console.log(initC);
-                if(initC?.innerHTML=="💣"){
-                    
-                    
-                    
-                }
-                else{
-                    initC.innerHTML = " ";
-                }
+    for(let x=0; x<rn; x++){
+        for(let y=0; y<cn; y++ ){
+            initC = <HTMLTableCellElement>document.getElementById('cell'+x+y);
+            console.log(initC);
+            if(initC.innerHTML == "💣"){
+                y+1;
             }
-        }   
-        // if(initC?.innerHTML =="💣"){
-        // }
-        // console.log(x);
-        // console.log(y);
+            else{
+                setNumber(x,y);
+            }
+        }  
+    }   
+}
+
+function setNumber(u:number,v:number){
+    var adjCells:string[] = [];
+    if((u>0) && (v>0)){
+        adjCells.push('cell'+(u-1)+(v-1));
     }
-
-// }
-
-
-
-
-
-
-
-    // for( let t=0; t<tds.length; t++) {
-    //     if(initC?.innerHTML =="💣") {
-    //         t++;
-    //     }
-    //     else{
-    //         // tds[t].innerHTML = " ";
-    //     }
-    //     console.log(n)
-    // }
-
+    if(u>0)
+    {
+        adjCells.push('cell'+(u-1)+v);
+    }
+    if((u>0) && (v<cn-1)){
+        adjCells.push('cell'+(u-1)+(v+1));
+    }
+    if(v<cn-1) {
+        adjCells.push('cell'+u+(v+1));
+    }
+    if((u<rn-1) && (v<cn-1)){
+        adjCells.push('cell'+(u+1)+(v+1));
+    }
+    if(u<rn-1){
+        adjCells.push('cell'+(u+1)+v);
+    }
+    if((u<rn-1) && (v>0)){
+        adjCells.push('cell'+(u+1)+(v-1));
+    }
+    if(v>0){
+        adjCells.push('cell'+u+(v-1));
+    }
+    console.log(adjCells);
+    var Bcount=0;
+    for(let t=0; t<adjCells.length; t++){
+        let CurrentcellID = adjCells[t];
+        let Currentcell = document.getElementById(CurrentcellID);
+        if(Currentcell?.innerHTML=="💣"){
+            Bcount++;
+            let countb = Bcount;
+            initC.innerHTML = countb.toString();    
+        }
+    }
+}
 
 function Reset() {
     location.reload();
@@ -123,6 +132,39 @@ function Reset() {
 
 
 
+
+
+                    // c1 = 'cell'+(x-1)+""+(y-1);
+                    // c2 = 'cell'+(x-1)+""+(y);
+                    // c3 = 'cell'+(x-1)+""+(y+1);
+                    // c4 = 'cell'+(x)+""+(y+1);
+                    // c5 = 'cell'+(x+1)+""+(y+1);
+                    // c6 = 'cell'+(x-1)+""+(y);
+                    // c7 = 'cell'+(x+1)+""+(y-1);
+                    // c8 = 'cell'+(x+1)+""+(y-1);
+                    // eightCell.push(c1, c2, c3, c4, c5, c6, c7, c8);
+                    // console.log(eightCell);
+                    //     else if(document.getElementById(eightCell[cell])!.innerHTML = "💣" )
+                    //     {
+                    //         let Bcount = 0;
+                    //         Bcount++;
+                    //         let Bnumber:any = Bcount;
+                    //         initC.innerHTML = Bnumber;
+                    //     }
+                    //     else{
+                    //         initC.innerHTML = " ";
+                    //     }
+                    // }
+
+    // for( let t=0; t<tds.length; t++) {
+    //     if(initC?.innerHTML =="💣") {
+    //         t++;
+    //     }
+    //     else{
+    //         // tds[t].innerHTML = " ";
+    //     }
+    //     console.log(n)
+    // }
 
 
 
