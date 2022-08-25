@@ -1,18 +1,15 @@
-var r, c, b, n, cellVal, putB;
+var r, c, b, n, cellVal, putB, count = 0;
 var rowno = document.getElementById("rno"), colno = document.getElementById("cno"), bomb = document.getElementById("bmb");
-var colcell, rowcell, bt, initC;
+var colcell, rowcell, bt, initC, CoverBtn;
 var bIDAr = [];
 var bombAr = [];
-var rn, cn, count = 0;
+var rn, cn, count = 0, mineID;
 var c1, c2, c3, c4, c5, c6, c7, c8;
-// function checkTable(){
-// }
 function makeTable() {
     var rno = rowno.value;
     var cno = colno.value;
     rn = rno;
     cn = cno;
-    console.log(rn, cn);
     for (r = 0; r < rno; r++) {
         rowcell = document.getElementById("boxCont").insertRow(r);
         rowcell.setAttribute('class', 'cell-cont');
@@ -20,6 +17,10 @@ function makeTable() {
             colcell = rowcell.insertCell(c);
             colcell.setAttribute('class', 'cell');
             colcell.setAttribute('id', 'cell' + r + c);
+            var CoverBtn_1 = document.createElement("button");
+            colcell.appendChild(CoverBtn_1);
+            CoverBtn_1.setAttribute("class", "Cover");
+            // CoverBtn.setAttribute("onclick", "coverRemove()")
             putB = 'cell' + r + c;
             bIDAr.push(putB);
         }
@@ -32,21 +33,20 @@ function setBomb() {
     console.log(bIDAr);
     var Mno = +(bomb.value);
     for (var i = 0; i < Mno; i++) {
-        var mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
+        mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
         if (bombAr.includes(mineID) != true) {
             bombAr.push(mineID);
-            document.getElementById(mineID).innerHTML = "💣";
+            document.getElementById(mineID).setAttribute("class", "bombimg");
             (_a = document.getElementById(mineID)) === null || _a === void 0 ? void 0 : _a.setAttribute("onclick", "setTimeout(clickBomb,500)");
             console.log(mineID);
         }
         else {
             i--;
         }
-        console.log(n);
     }
 }
 function clickBomb() {
-    document.getElementById("boxCont").style.display = "none";
+    var Minecell = document.getElementById("boxCont").style.display = "none";
     var gameOver = document.getElementById('gOver').style.display = "block";
 }
 function setNos() {
@@ -54,8 +54,8 @@ function setNos() {
         for (var y = 0; y < cn; y++) {
             initC = document.getElementById('cell' + x + y);
             console.log(initC);
-            if (initC.innerHTML == "💣") {
-                y + 1;
+            if (initC.className == "bombimg") { //to avoid changing the innerhtml of cell that has bomb.
+                y + 1; //if yes go to the next cell
             }
             else {
                 setNumber(x, y);
@@ -65,6 +65,8 @@ function setNos() {
 }
 function setNumber(u, v) {
     var adjCells = [];
+    console.log(rn, cn);
+    console.log((rn - 1), (cn - 1));
     if ((u > 0) && (v > 0)) {
         adjCells.push('cell' + (u - 1) + (v - 1));
     }
@@ -94,10 +96,30 @@ function setNumber(u, v) {
     for (var t = 0; t < adjCells.length; t++) {
         var CurrentcellID = adjCells[t];
         var Currentcell = document.getElementById(CurrentcellID);
-        if ((Currentcell === null || Currentcell === void 0 ? void 0 : Currentcell.innerHTML) == "💣") {
+        if ((Currentcell === null || Currentcell === void 0 ? void 0 : Currentcell.className) == "bombimg") {
             Bcount++;
             var countb = Bcount;
-            initC.innerHTML = countb.toString();
+            if (Bcount == 1) {
+                initC.setAttribute('class', 'one');
+            }
+            if (Bcount == 2) {
+                initC.setAttribute('class', 'two');
+            }
+            if (Bcount == 3) {
+                initC.setAttribute('class', 'three');
+            }
+            if (Bcount == 4) {
+                initC.setAttribute('class', 'four');
+            }
+            if (Bcount == 5) {
+                initC.setAttribute('class', 'five');
+            }
+            if (Bcount == 6) {
+                initC.setAttribute('class', 'six');
+            }
+            if (Bcount == 7) {
+                initC.setAttribute('class', 'seven');
+            }
         }
     }
 }
@@ -160,3 +182,14 @@ function Reset() {
 // let C6 = document.getElementById('cell'+(x+1)+(y));
 // let C7 = document.getElementById('cell'+(x+1)+(y-1));
 // let C8 = document.getElementById('cell'+(x)+(y-1));
+// var NumbereCell = countb.toString(); 
+// console.log(NumbereCell);
+// if(NumbereCell = "1"){
+//     initC.setAttribute('class','one')
+// }   
+// else if(NumbereCell = "12"){
+//     initC.setAttribute('class','two')
+// }   
+// else if(NumbereCell = "123"){
+//     initC.setAttribute('class','three')
+// }   

@@ -61,18 +61,36 @@ body{
     background-color: rgb(150, 146, 146);
 }
 
+.Cover{
+    width: 35px;
+    height: 35px;
+    background-color: rgb(206, 206, 206);
+}
+
+
 .cell-cont{
     border: 1px solid rgb(0, 0, 0);
 }
 
+
+
 .cell {
-    min-width: 30px;
+    min-width: 35px;
     max-width: 15px;
-    height: 30px;
+    height: 35px;
     color: rgb(133, 58, 225);
     background-color: rgb(211, 211, 211);
     text-align: center;
     font-size: x-large;
+    /* background-image: url('./gray.png'); */
+}
+
+.bombimg {
+    background-color: rgb(210, 206, 206);
+    background-image: url('./miness.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid rgb(209, 209, 209);
 }
 
 #gOver{
@@ -83,6 +101,57 @@ body{
     font-weight: bolder;
     
 }
+
+
+.one{
+    background-color: rgb(211, 211, 211);
+    background-image: url('./one.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.two{
+    background-color: rgb(211, 211, 211);
+    background-image: url('./two.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.three{
+    background-color: rgb(211, 211, 211);
+    background-image: url('./three.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.four{
+    background-color: rgb(211, 211, 211);
+    background-image: url('./four.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.five{
+    background-color: rgb(211, 211, 211);
+    background-image: url('./five.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.six{
+    background-color: rgb(211, 211, 211);
+    background-image: url('./six.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.seven{
+    background-color: rgb(211, 211, 211);
+    background-image: url('./seven.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 
 
 /* .cell-btn {
