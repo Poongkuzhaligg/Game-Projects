@@ -2,10 +2,15 @@ var r, c, b, n, cellVal, putB, count = 0;
 var rowno = document.getElementById("rno"), colno = document.getElementById("cno"), bomb = document.getElementById("bmb");
 var colcell, rowcell, bt, initC, CoverBtn;
 var bIDAr = [];
+var covIDAr = [];
 var bombAr = [];
 var rn, cn, count = 0, mineID;
 var c1, c2, c3, c4, c5, c6, c7, c8;
 function makeTable() {
+    count++;
+    if (count == 1) {
+        document.getElementById('btn').onclick = null;
+    }
     var rno = rowno.value;
     var cno = colno.value;
     rn = rno;
@@ -16,17 +21,22 @@ function makeTable() {
         for (c = 0; c < cno; c++) {
             colcell = rowcell.insertCell(c);
             colcell.setAttribute('class', 'cell');
-            colcell.setAttribute('id', 'cell' + r + c);
+            colcell.setAttribute('id', 'cell' + r + '-' + c);
             var CoverBtn_1 = document.createElement("button");
             colcell.appendChild(CoverBtn_1);
-            CoverBtn_1.setAttribute("class", "Cover");
-            // CoverBtn.setAttribute("onclick", "coverRemove()")
-            putB = 'cell' + r + c;
+            CoverBtn_1.setAttribute('id', 'Cover' + r + '-' + c);
+            CoverBtn_1.classList.add('Cover');
+            CoverBtn_1.setAttribute("onclick", "coverRemove(this.id)");
+            putB = 'cell' + r + '-' + c;
             bIDAr.push(putB);
         }
     }
     setBomb();
     setNos();
+}
+function coverRemove(coverID) {
+    console.log(coverID);
+    document.getElementById(coverID).style.display = "none";
 }
 function setBomb() {
     var _a;
@@ -46,13 +56,13 @@ function setBomb() {
     }
 }
 function clickBomb() {
-    var Minecell = document.getElementById("boxCont").style.display = "none";
+    document.getElementById("boxCont").style.display = "none";
     var gameOver = document.getElementById('gOver').style.display = "block";
 }
 function setNos() {
     for (var x = 0; x < rn; x++) {
         for (var y = 0; y < cn; y++) {
-            initC = document.getElementById('cell' + x + y);
+            initC = document.getElementById('cell' + x + '-' + y);
             console.log(initC);
             if (initC.className == "bombimg") { //to avoid changing the innerhtml of cell that has bomb.
                 y + 1; //if yes go to the next cell
@@ -68,28 +78,28 @@ function setNumber(u, v) {
     console.log(rn, cn);
     console.log((rn - 1), (cn - 1));
     if ((u > 0) && (v > 0)) {
-        adjCells.push('cell' + (u - 1) + (v - 1));
+        adjCells.push('cell' + (u - 1) + '-' + (v - 1));
     }
     if (u > 0) {
-        adjCells.push('cell' + (u - 1) + v);
+        adjCells.push('cell' + (u - 1) + '-' + v);
     }
     if ((u > 0) && (v < cn - 1)) {
-        adjCells.push('cell' + (u - 1) + (v + 1));
+        adjCells.push('cell' + (u - 1) + '-' + (v + 1));
     }
     if (v < cn - 1) {
-        adjCells.push('cell' + u + (v + 1));
+        adjCells.push('cell' + u + '-' + (v + 1));
     }
     if ((u < rn - 1) && (v < cn - 1)) {
-        adjCells.push('cell' + (u + 1) + (v + 1));
+        adjCells.push('cell' + (u + 1) + '-' + (v + 1));
     }
     if (u < rn - 1) {
-        adjCells.push('cell' + (u + 1) + v);
+        adjCells.push('cell' + (u + 1) + '-' + v);
     }
     if ((u < rn - 1) && (v > 0)) {
-        adjCells.push('cell' + (u + 1) + (v - 1));
+        adjCells.push('cell' + (u + 1) + '-' + (v - 1));
     }
     if (v > 0) {
-        adjCells.push('cell' + u + (v - 1));
+        adjCells.push('cell' + u + '-' + (v - 1));
     }
     console.log(adjCells);
     var Bcount = 0;
@@ -98,23 +108,22 @@ function setNumber(u, v) {
         var Currentcell = document.getElementById(CurrentcellID);
         if ((Currentcell === null || Currentcell === void 0 ? void 0 : Currentcell.className) == "bombimg") {
             Bcount++;
-            var countb = Bcount;
             if (Bcount == 1) {
                 initC.setAttribute('class', 'one');
             }
-            if (Bcount == 2) {
+            else if (Bcount == 2) {
                 initC.setAttribute('class', 'two');
             }
-            if (Bcount == 3) {
+            else if (Bcount == 3) {
                 initC.setAttribute('class', 'three');
             }
-            if (Bcount == 4) {
+            else if (Bcount == 4) {
                 initC.setAttribute('class', 'four');
             }
-            if (Bcount == 5) {
+            else if (Bcount == 5) {
                 initC.setAttribute('class', 'five');
             }
-            if (Bcount == 6) {
+            else if (Bcount == 6) {
                 initC.setAttribute('class', 'six');
             }
             if (Bcount == 7) {

@@ -2,13 +2,16 @@ var r:any, c:any, b:any, n:any, cellVal:any, putB:string, count:number = 0;
 var rowno = <HTMLInputElement>document.getElementById("rno"), colno = <HTMLInputElement>document.getElementById("cno"), bomb = <HTMLInputElement>document.getElementById("bmb");
 var colcell:HTMLTableCellElement, rowcell:HTMLTableRowElement, bt:HTMLButtonElement, initC:HTMLTableCellElement, CoverBtn:HTMLButtonElement;
 var bIDAr:string[] = [];
+var covIDAr:string[] = [];
 var bombAr:string[] = [];
 var rn:any, cn:any, count:number = 0, mineID:string;
 var c1:string, c2: string, c3:string, c4:string, c5:string, c6:string, c7:string, c8:string;
 
-
-
 function makeTable() {
+    count++;
+    if(count==1){
+        (<HTMLButtonElement>document.getElementById('btn')).onclick = null;
+    }
     var rno = rowno.value;
     var cno = colno.value;
     rn = rno; cn = cno;
@@ -20,12 +23,13 @@ function makeTable() {
         {
             colcell = rowcell.insertCell(c);
             colcell.setAttribute('class', 'cell' );
-            colcell.setAttribute('id', 'cell'+r+c );
+            colcell.setAttribute('id', 'cell'+r+'-'+c );
             let CoverBtn = document.createElement("button");
             colcell.appendChild(CoverBtn);
-            CoverBtn.setAttribute("class", "Cover");
-            CoverBtn.setAttribute("onclick", "coverRemove()")
-            putB = 'cell'+r+c;
+            CoverBtn.setAttribute('id', 'Cover'+r+'-'+c);
+            CoverBtn.classList.add('Cover');
+            CoverBtn.setAttribute("onclick", "coverRemove(this.id)")
+            putB = 'cell'+r+'-'+c;
             bIDAr.push(putB);
         }
     }
@@ -33,8 +37,9 @@ function makeTable() {
     setNos();
 }
 
-function coverRemove(){
-    CoverBtn.style.display = "Null";
+function coverRemove(coverID:string){
+    console.log(coverID);
+    (<HTMLButtonElement>document.getElementById(coverID)).style.display = "none";
 }
 
 function setBomb(){
@@ -55,17 +60,14 @@ function setBomb(){
 }
 
 function clickBomb(){
-    var Minecell = (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
+    (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
     var gameOver = (<HTMLParagraphElement>document.getElementById('gOver')).style.display = "block";
-    
-    
 }
-
 
 function setNos(){
     for(let x=0; x<rn; x++){
         for(let y=0; y<cn; y++ ){
-            initC = <HTMLTableCellElement>document.getElementById('cell'+x+y);
+            initC = <HTMLTableCellElement>document.getElementById('cell'+x+'-'+y);
             console.log(initC);
             if(initC.className == "bombimg"){ //to avoid changing the innerhtml of cell that has bomb.
                 y+1;  //if yes go to the next cell
@@ -82,29 +84,29 @@ function setNumber(u:number,v:number){
     console.log(rn,cn);
     console.log((rn-1),(cn-1));
     if((u>0) && (v>0)){
-        adjCells.push('cell'+(u-1)+(v-1));
+        adjCells.push('cell'+(u-1)+'-'+(v-1));
     }
     if(u>0)
     {
-        adjCells.push('cell'+(u-1)+v);
+        adjCells.push('cell'+(u-1)+'-'+v);
     }
     if((u>0) && (v<cn-1)){
-        adjCells.push('cell'+(u-1)+(v+1));
+        adjCells.push('cell'+(u-1)+'-'+(v+1));
     }
     if(v<cn-1) {
-        adjCells.push('cell'+u+(v+1));
+        adjCells.push('cell'+u+'-'+(v+1));
     }
     if((u<rn-1) && (v<cn-1)){
-        adjCells.push('cell'+(u+1)+(v+1));
+        adjCells.push('cell'+(u+1)+'-'+(v+1));
     }
     if(u<rn-1){
-        adjCells.push('cell'+(u+1)+v);
+        adjCells.push('cell'+(u+1)+'-'+v);
     }
     if((u<rn-1) && (v>0)){
-        adjCells.push('cell'+(u+1)+(v-1));
+        adjCells.push('cell'+(u+1)+'-'+(v-1));
     }
     if(v>0){
-        adjCells.push('cell'+u+(v-1));
+        adjCells.push('cell'+u+'-'+(v-1));
     }
     console.log(adjCells);
     var Bcount=0;
@@ -113,32 +115,30 @@ function setNumber(u:number,v:number){
         let Currentcell = document.getElementById(CurrentcellID);
         if(Currentcell?.className=="bombimg"){
             Bcount++;
-            let countb = Bcount;
             if(Bcount == 1){
                 initC.setAttribute('class', 'one');
             }
-             if(Bcount == 2){
+            else if(Bcount == 2){
                 initC.setAttribute('class', 'two');
             }
-             if(Bcount == 3){
+            else if(Bcount == 3){
                 initC.setAttribute('class', 'three');
             }
-             if(Bcount == 4){
+            else if(Bcount == 4){
                 initC.setAttribute('class', 'four');
             }
-             if(Bcount == 5){
+            else if(Bcount == 5){
                 initC.setAttribute('class', 'five');
             }
-             if(Bcount == 6){
+            else if(Bcount == 6){
                 initC.setAttribute('class', 'six');
             }
-             if(Bcount == 7){
+            if(Bcount == 7){
                 initC.setAttribute('class', 'seven');
             }
         }
     }
 }
-
 
 function Reset() {
     location.reload();
