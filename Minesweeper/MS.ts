@@ -1,4 +1,4 @@
-var r:any, c:any, b:any, n:any, cellVal:any, putB:string, minesFlagged:number = 0, CurrentId:string;;
+var r:any, c:any, b:any, n:any, cellVal:any, putB:string, minesFlagged:number = 0;
 var rowno = <HTMLInputElement>document.getElementById("rno"), colno = <HTMLInputElement>document.getElementById("cno"), bomb = <HTMLInputElement>document.getElementById("bmb");
 var colcell:HTMLTableCellElement, rowcell:HTMLTableRowElement, bt:HTMLButtonElement, initC:HTMLTableCellElement, CoverBtn:HTMLButtonElement, MinesC:HTMLParagraphElement;
 var bIDAr:string[] = [];
@@ -222,91 +222,85 @@ function expandCells(Crn:number, Ccn:number){
             coverIDAr.push(Crn+'-'+(Ccn-1));
         }
         console.log(coverIDAr);
-        for(let d=0; d<coverIDAr.length; d++){
-            var CurrentcoverID = coverIDAr[d];
-            let PcoverEl = document.getElementById(CurrentcoverID)?.parentElement;
-            if( PcoverEl?.className != "bombimg" ){ //checking if the neighboring cells doesn't have bomb.
-                (<HTMLButtonElement>document.getElementById(CurrentcoverID)).style.display = "none";
-                if( PcoverEl?.className == "cell"){
-                    openCoverID.push(CurrentcoverID);
-                    let openId = CurrentcoverID.split('-');
-                    let Orno = +openId[0];
-                    let Ocno = +openId[1];
-                    FurtherExpand(Orno, Ocno);
-                }
-                else{
-                    return;
-                }
-            }
         }
-    }
+        openCells(coverIDAr);
+}    
+
+function openCells(tempCoverID:string[]){
+    let openId, Or:number, Oc;
+    for(let d=0; d<tempCoverID.length; d++){
+        let CurrentcoverID = tempCoverID[d];
+        let PcoverEl = document.getElementById(CurrentcoverID)?.parentElement;
+        if( PcoverEl?.className != "bombimg"){ //checking if the neighboring cells doesn't have bomb.
+            openCoverID.push(CurrentcoverID);
+            openId = CurrentcoverID.split('-');
+            let Oro = +openId[0];
+            let Oco = +openId[1];
+            Or = Oro;
+            Oc = Oco;
+            (<HTMLButtonElement>document.getElementById(CurrentcoverID)).style.display = "none";
+        }
 }
-
-
-function FurtherExpand(Or:number, Oc:number){
-
-        if((Or>0) && (Oc>0)){
-            if( !openCoverID.includes((Or-1)+'-'+(Oc-1)) ){
-                openCoverID.push((Or-1)+'-'+(Oc-1));
-            }
-        }
-        if(Or>0){
-            if( !openCoverID.includes((Or-1)+'-'+Oc) ){
-                openCoverID.push((Or-1)+'-'+Oc);
-            }
-        }
-        if((Or>0) && (Oc<cn-1)){
-            if( !openCoverID.includes((Or-1)+'-'+(Oc+1)) ){
-                openCoverID.push((Or-1)+'-'+(Oc+1));
-            }
-        }
-        if(Oc<cn-1) {
-            if( !openCoverID.includes( Or+'-'+(Oc+1)) ){
-                openCoverID.push(Or+'-'+(Oc+1));
-            }
-        }
-        if((Or<rn-1) && (Oc<cn-1)){
-            if( !openCoverID.includes((Or+1)+'-'+(Oc+1)) ){
-                openCoverID.push((Or+1)+'-'+(Oc+1));
-            }
-        }
-        if(Or<rn-1){
-            if( !openCoverID.includes( (Or+1)+'-'+ Oc) ){
-                openCoverID.push((Or+1)+'-'+Oc);
-            }
-        }
-        if((Or<rn-1) && (Oc>0)){
-            if(!openCoverID.includes((Or+1)+'-'+(Oc-1)) ){
-                openCoverID.push((Or+1)+'-'+(Oc-1));
-            }
-        }
-        if(Oc>0){
-            if( !openCoverID.includes(Or+'-'+(Oc-1)) ){
-                openCoverID.push(Or+'-'+(Oc-1));
-            }
-        }
-    console.log(openCoverID);
-    for( let z=0; z<openCoverID.length; z++){
-        let opCoID = openCoverID[z];
-        let parentOcid = document.getElementById(opCoID)?.parentElement;
-        if( parentOcid?.className != "bombimg"){ //checking if the neighboring cells doesn't have bomb.
-            (<HTMLButtonElement>document.getElementById(opCoID)).style.display = "none";
-        }
-    }
+expandCells(Or, Oc);
 }
-// openCoverID.push(CurrentcoverID);
-// let openId = CurrentcoverID.split('-');
-// let Orno = +openId[0];
-// let Ocno = +openId[1];
-// FurtherExpand(Orno, Ocno);
+// function FurtherExpand(Or:number, Oc:number){
+        
+//         if((Or>0) && (Oc>0)){
+//             if( !openCoverID.includes((Or-1)+'-'+(Oc-1)) ){
+//                 openCoverID.push((Or-1)+'-'+(Oc-1));
+//             }
+//         }
+//         if(Or>0){
+//             if( !openCoverID.includes((Or-1)+'-'+Oc) ){
+//                 openCoverID.push((Or-1)+'-'+Oc);
+//             }
+//         }
+//         if((Or>0) && (Oc<cn-1)){
+//             if( !openCoverID.includes((Or-1)+'-'+(Oc+1)) ){
+//                 openCoverID.push((Or-1)+'-'+(Oc+1));
+//             }
+//         }
+//         if(Oc<cn-1) {
+//             if( !openCoverID.includes( Or+'-'+(Oc+1)) ){
+//                 openCoverID.push(Or+'-'+(Oc+1));
+//             }
+//         }
+//         if((Or<rn-1) && (Oc<cn-1)){
+//             if( !openCoverID.includes((Or+1)+'-'+(Oc+1)) ){
+//                 openCoverID.push((Or+1)+'-'+(Oc+1));
+//             }
+//         }
+//         if(Or<rn-1){
+//             if( !openCoverID.includes( (Or+1)+'-'+ Oc) ){
+//                 openCoverID.push((Or+1)+'-'+Oc);
+//             }
+//         }
+//         if((Or<rn-1) && (Oc>0)){
+//             if(!openCoverID.includes((Or+1)+'-'+(Oc-1)) ){
+//                 openCoverID.push((Or+1)+'-'+(Oc-1));
+//             }
+//         }
+//         if(Oc>0){
+//             if( !openCoverID.includes(Or+'-'+(Oc-1)) ){
+//                 openCoverID.push(Or+'-'+(Oc-1));
+//             }
+//         }
+//     console.log(openCoverID);
+//     for( let z=0; z<openCoverID.length; z++){
+//         let opCoID = openCoverID[z];
+//         let parentOcid = document.getElementById(opCoID)?.parentElement;
+//         if( parentOcid?.className != "bombimg"){ //checking if the neighboring cells doesn't have bomb.
+//             // if(parentOcid?.className == "cell"){
+//             //     opCoID.split("-");
+//             //     console.log('hey'+opCoID);
+//             // }
+//             // else{
+//                 (<HTMLButtonElement>document.getElementById(opCoID)).style.display = "none";
+//             }
+            
+//         }
+//     }
 
-// }
-// if( PcoverEl?.className == "cell"){
-//     openCoverID.push(CurrentcoverID);
-//     CurrentId = CurrentcoverID;
-// }
-// else{
-//     return;
 // }
 
 function Reset() {
