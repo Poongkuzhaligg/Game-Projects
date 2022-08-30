@@ -41,7 +41,7 @@ body{
     width: 85px;
     height: 35px;
     margin: 10px;
-    margin-top: 30px;
+    margin-top: 20px;
     border: 0;
     background-color: rgba(60, 63, 64, 0.703);
     color: rgb(255, 255, 255);
@@ -61,9 +61,14 @@ body{
     background-color: rgb(150, 146, 146);
 }
 
+.MSgame{
+    margin-top: 100px;
+}
+
 .Cover{
     width: 35px;
     height: 35px;
+    font-size: x-large;
     background-color: rgb(206, 206, 206);
 }
 
@@ -75,8 +80,7 @@ body{
 
 
 .cell {
-    min-width: 35px;
-    max-width: 15px;
+    width: 35px;
     height: 35px;
     color: rgb(133, 58, 225);
     background-color: rgb(211, 211, 211);
@@ -99,54 +103,61 @@ body{
     text-align: center;
     font-size: xx-large;
     font-weight: bolder;
+}
+
+#gWon{
+    display: none;
+    color:rgb(166, 204, 96);
+    margin-top: 30px;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bolder;
     
 }
 
+.numberCell {
+    width: 35px;
+    height: 35px;
+    background-color: rgb(211, 211, 211);
+}
 
 .one{
-    background-color: rgb(211, 211, 211);
     background-image: url('./one.png');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .two{
-    background-color: rgb(211, 211, 211);
     background-image: url('./two.png');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .three{
-    background-color: rgb(211, 211, 211);
     background-image: url('./three.png');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .four{
-    background-color: rgb(211, 211, 211);
     background-image: url('./four.png');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .five{
-    background-color: rgb(211, 211, 211);
     background-image: url('./five.png');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .six{
-    background-color: rgb(211, 211, 211);
     background-image: url('./six.png');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .seven{
-    background-color: rgb(211, 211, 211);
     background-image: url('./seven.png');
     background-repeat: no-repeat;
     background-position: center;
