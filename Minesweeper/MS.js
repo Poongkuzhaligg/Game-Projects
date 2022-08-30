@@ -1,8 +1,10 @@
-var r, c, b, n, cellVal, putB, minesFlagged = 0;
+var r, c, b, n, cellVal, putB, minesFlagged = 0, CurrentId;
+;
 var rowno = document.getElementById("rno"), colno = document.getElementById("cno"), bomb = document.getElementById("bmb");
 var colcell, rowcell, bt, initC, CoverBtn, MinesC;
 var bIDAr = [];
 var bombAr = [];
+var openCoverID = [];
 var rn, cn, mn, count = 0, mineID;
 var c1, c2, c3, c4, c5, c6, c7, c8;
 function makeTable() {
@@ -64,7 +66,7 @@ function setNos() {
         for (var y = 0; y < cn; y++) {
             initC = document.getElementById('cell' + x + '-' + y);
             console.log(initC);
-            if (initC.className == "bombimg") { //to avoid changing the innerhtml of cell that has bomb.
+            if (initC.className == "bombimg") { //to avoid changing the cell that has bomb.
                 y + 1; //if yes go to the next cell
             }
             else {
@@ -107,33 +109,35 @@ function setNumber(u, v) {
         var Currentcell = document.getElementById(CurrentcellID);
         if ((Currentcell === null || Currentcell === void 0 ? void 0 : Currentcell.className) == "bombimg") {
             Bcount++;
-            if (Bcount == 1) {
-                initC.setAttribute('class', 'one');
-                initC.classList.add('numberCell');
-            }
-            else if (Bcount == 2) {
-                initC.setAttribute('class', 'two');
-                initC.classList.add('numberCell');
-            }
-            else if (Bcount == 3) {
-                initC.setAttribute('class', 'three');
-                initC.classList.add('numberCell');
-            }
-            else if (Bcount == 4) {
-                initC.setAttribute('class', 'four');
-                initC.classList.add('numberCell');
-            }
-            else if (Bcount == 5) {
-                initC.setAttribute('class', 'five');
-                initC.classList.add('numberCell');
-            }
-            else if (Bcount == 6) {
-                initC.setAttribute('class', 'six');
-                initC.classList.add('numberCell');
-            }
-            if (Bcount == 7) {
-                initC.setAttribute('class', 'seven');
-                initC.classList.add('numberCell');
+            switch (Bcount) {
+                case 1:
+                    initC.setAttribute('class', 'one');
+                    initC.classList.add('numberCell');
+                    break;
+                case 2:
+                    initC.setAttribute('class', 'one');
+                    initC.classList.add('numberCell');
+                    break;
+                case 3:
+                    initC.setAttribute('class', 'three');
+                    initC.classList.add('numberCell');
+                    break;
+                case 4:
+                    initC.setAttribute('class', 'four');
+                    initC.classList.add('numberCell');
+                    break;
+                case 5:
+                    initC.setAttribute('class', 'five');
+                    initC.classList.add('numberCell');
+                    break;
+                case 6:
+                    initC.setAttribute('class', 'six');
+                    initC.classList.add('numberCell');
+                    break;
+                case 7:
+                    initC.setAttribute('class', 'seven');
+                    initC.classList.add('numberCell');
+                    break;
             }
         }
     }
@@ -165,12 +169,18 @@ function handleRightClick(id, event) {
     }
 }
 function coverRemove(coverID) {
+    var _a;
     console.log(coverID);
-    var tempID = coverID.split('-');
-    var Cr = tempID[0];
-    var Cc = tempID[1];
-    console.log(+Cr, +Cc);
-    expandCells(+Cr, +Cc);
+    if (((_a = document.getElementById(coverID).parentElement) === null || _a === void 0 ? void 0 : _a.className) == "bombimg") { //checking this condition here because for expanding bombcells will be filtered out so its cover wont be removed and user wont be able to see the bomb..
+        document.getElementById(coverID).style.display = "none";
+    }
+    else {
+        var tempID = coverID.split('-');
+        var Cr = tempID[0];
+        var Cc = tempID[1];
+        console.log(+Cr, +Cc);
+        expandCells(+Cr, +Cc);
+    }
 }
 function expandCells(Crn, Ccn) {
     var _a, _b;
@@ -206,13 +216,87 @@ function expandCells(Crn, Ccn) {
         console.log(coverIDAr);
         for (var d = 0; d < coverIDAr.length; d++) {
             var CurrentcoverID = coverIDAr[d];
-            var coverEl = (_b = document.getElementById(CurrentcoverID)) === null || _b === void 0 ? void 0 : _b.parentElement;
-            if (((coverEl === null || coverEl === void 0 ? void 0 : coverEl.className) == "numberCell") || ((coverEl === null || coverEl === void 0 ? void 0 : coverEl.className) != "bombimg") && ((coverEl === null || coverEl === void 0 ? void 0 : coverEl.className) == "cell")) {
+            var PcoverEl = (_b = document.getElementById(CurrentcoverID)) === null || _b === void 0 ? void 0 : _b.parentElement;
+            if ((PcoverEl === null || PcoverEl === void 0 ? void 0 : PcoverEl.className) != "bombimg") { //checking if the neighboring cells doesn't have bomb.
                 document.getElementById(CurrentcoverID).style.display = "none";
+                if ((PcoverEl === null || PcoverEl === void 0 ? void 0 : PcoverEl.className) == "cell") {
+                    openCoverID.push(CurrentcoverID);
+                    var openId = CurrentcoverID.split('-');
+                    var Orno = +openId[0];
+                    var Ocno = +openId[1];
+                    FurtherExpand(Orno, Ocno);
+                }
+                else {
+                    return;
+                }
             }
         }
     }
 }
+function FurtherExpand(Or, Oc) {
+    var _a;
+    if ((Or > 0) && (Oc > 0)) {
+        if (!openCoverID.includes((Or - 1) + '-' + (Oc - 1))) {
+            openCoverID.push((Or - 1) + '-' + (Oc - 1));
+        }
+    }
+    if (Or > 0) {
+        if (!openCoverID.includes((Or - 1) + '-' + Oc)) {
+            openCoverID.push((Or - 1) + '-' + Oc);
+        }
+    }
+    if ((Or > 0) && (Oc < cn - 1)) {
+        if (!openCoverID.includes((Or - 1) + '-' + (Oc + 1))) {
+            openCoverID.push((Or - 1) + '-' + (Oc + 1));
+        }
+    }
+    if (Oc < cn - 1) {
+        if (!openCoverID.includes(Or + '-' + (Oc + 1))) {
+            openCoverID.push(Or + '-' + (Oc + 1));
+        }
+    }
+    if ((Or < rn - 1) && (Oc < cn - 1)) {
+        if (!openCoverID.includes((Or + 1) + '-' + (Oc + 1))) {
+            openCoverID.push((Or + 1) + '-' + (Oc + 1));
+        }
+    }
+    if (Or < rn - 1) {
+        if (!openCoverID.includes((Or + 1) + '-' + Oc)) {
+            openCoverID.push((Or + 1) + '-' + Oc);
+        }
+    }
+    if ((Or < rn - 1) && (Oc > 0)) {
+        if (!openCoverID.includes((Or + 1) + '-' + (Oc - 1))) {
+            openCoverID.push((Or + 1) + '-' + (Oc - 1));
+        }
+    }
+    if (Oc > 0) {
+        if (!openCoverID.includes(Or + '-' + (Oc - 1))) {
+            openCoverID.push(Or + '-' + (Oc - 1));
+        }
+    }
+    console.log(openCoverID);
+    for (var z = 0; z < openCoverID.length; z++) {
+        var opCoID = openCoverID[z];
+        var parentOcid = (_a = document.getElementById(opCoID)) === null || _a === void 0 ? void 0 : _a.parentElement;
+        if ((parentOcid === null || parentOcid === void 0 ? void 0 : parentOcid.className) != "bombimg") { //checking if the neighboring cells doesn't have bomb.
+            document.getElementById(opCoID).style.display = "none";
+        }
+    }
+}
+// openCoverID.push(CurrentcoverID);
+// let openId = CurrentcoverID.split('-');
+// let Orno = +openId[0];
+// let Ocno = +openId[1];
+// FurtherExpand(Orno, Ocno);
+// }
+// if( PcoverEl?.className == "cell"){
+//     openCoverID.push(CurrentcoverID);
+//     CurrentId = CurrentcoverID;
+// }
+// else{
+//     return;
+// }
 function Reset() {
     location.reload();
 }
@@ -352,3 +436,4 @@ function Reset() {
 // else if(NumbereCell = "123"){
 //     initC.setAttribute('class','three')
 // }   
+//(<HTMLButtonElement>document.getElementById(CurrentcoverID)).style.display = "none";
