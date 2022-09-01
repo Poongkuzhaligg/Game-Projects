@@ -4,6 +4,7 @@ var colcell, rowcell, bt, initC, CoverBtn, MinesC;
 var bIDAr = [];
 var bombAr = [];
 var openCoverID = [];
+var coverIDAr = [];
 var rn, cn, mn, count = 0, mineID;
 var c1, c2, c3, c4, c5, c6, c7, c8;
 function makeTable() {
@@ -28,7 +29,7 @@ function makeTable() {
             colcell.appendChild(CoverBtn_1);
             CoverBtn_1.setAttribute('id', r + '-' + c);
             CoverBtn_1.classList.add('Cover');
-            CoverBtn_1.setAttribute("onclick", "coverRemove(this.id)");
+            CoverBtn_1.setAttribute("onclick", "checkCover(this.id)");
             CoverBtn_1.setAttribute("oncontextmenu", "handleRightClick(this.id, event)");
             putB = 'cell' + r + '-' + c;
             bIDAr.push(putB);
@@ -152,6 +153,7 @@ function handleRightClick(id, event) {
         FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
         if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") { //again checking if the flagged cell is bomb cell if so this condition will replace CLICKEDBOMB onclick func.
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
+            minesFlagged--;
         }
     }
     else {
@@ -167,70 +169,102 @@ function handleRightClick(id, event) {
         }
     }
 }
-function coverRemove(coverID) {
+function checkCover(checkID) {
     var _a;
-    console.log(coverID);
-    if (((_a = document.getElementById(coverID).parentElement) === null || _a === void 0 ? void 0 : _a.className) == "bombimg") { //checking this condition here because for expanding bombcells will be filtered out so its cover wont be removed and user wont be able to see the bomb..
-        document.getElementById(coverID).style.display = "none";
+    if (((_a = document.getElementById(checkID).parentElement) === null || _a === void 0 ? void 0 : _a.className) == "bombimg") { //checking this condition here because for expanding bombcells will be filtered out so its cover wont be removed and user wont be able to see the bomb..
+        document.getElementById(checkID).style.display = "none";
     }
     else {
-        var tempID = coverID.split('-');
-        var Cr = tempID[0];
-        var Cc = tempID[1];
-        console.log(+Cr, +Cc);
-        expandCells(+Cr, +Cc);
+        coverRemove(checkID);
     }
 }
-function expandCells(Crn, Ccn) {
-    var _a;
-    var coverIDAr = [];
-    var Tid = Crn + '-' + Ccn;
-    var TidElement = document.getElementById(Tid);
+function coverRemove(coverID) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
+    var tempID = coverID.split('-');
+    var Cr = +tempID[0];
+    var Cc = +tempID[1];
+    console.log(+Cr, +Cc);
+    var TidElement = document.getElementById(coverID);
     if (((_a = TidElement === null || TidElement === void 0 ? void 0 : TidElement.parentElement) === null || _a === void 0 ? void 0 : _a.className) != "bombimg") {
-        document.getElementById(Tid).style.display = "none";
-        if ((Crn > 0) && (Ccn > 0)) {
-            coverIDAr.push((Crn - 1) + '-' + (Ccn - 1));
+        document.getElementById(coverID).style.display = "none";
+        (_b = document.getElementById(coverID).parentElement) === null || _b === void 0 ? void 0 : _b.classList.add("checked");
+        if ((Cr > 0) && (Cc > 0)) {
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1)) && (((_d = (_c = document.getElementById((Cr - 1) + '-' + (Cc - 1))) === null || _c === void 0 ? void 0 : _c.parentElement) === null || _d === void 0 ? void 0 : _d.className) != "checked")) {
+                coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
+            }
         }
-        if (Crn > 0) {
-            coverIDAr.push((Crn - 1) + '-' + Ccn);
+        if (Cr > 0) {
+            if (!coverIDAr.includes((Cr - 1) + '-' + Cc) && (((_f = (_e = document.getElementById((Cr - 1) + '-' + Cc)) === null || _e === void 0 ? void 0 : _e.parentElement) === null || _f === void 0 ? void 0 : _f.className) != "checked")) {
+                coverIDAr.push((Cr - 1) + '-' + Cc);
+            }
         }
-        if ((Crn > 0) && (Ccn < cn - 1)) {
-            coverIDAr.push((Crn - 1) + '-' + (Ccn + 1));
+        if ((Cr > 0) && (Cc < cn - 1)) {
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc + 1)) && (((_h = (_g = document.getElementById((Cr - 1) + '-' + (Cc + 1))) === null || _g === void 0 ? void 0 : _g.parentElement) === null || _h === void 0 ? void 0 : _h.className) != "checked")) {
+                coverIDAr.push((Cr - 1) + '-' + (Cc + 1));
+            }
         }
-        if (Ccn < cn - 1) {
-            coverIDAr.push(Crn + '-' + (Ccn + 1));
+        if (Cc < cn - 1) {
+            if (!coverIDAr.includes(Cr + '-' + (Cc + 1)) && (((_k = (_j = document.getElementById(Cr + '-' + (Cc + 1))) === null || _j === void 0 ? void 0 : _j.parentElement) === null || _k === void 0 ? void 0 : _k.className) != "checked")) {
+                coverIDAr.push(Cr + '-' + (Cc + 1));
+            }
         }
-        if ((Crn < rn - 1) && (Ccn < cn - 1)) {
-            coverIDAr.push((Crn + 1) + '-' + (Ccn + 1));
+        if ((Cr < rn - 1) && (Cc < cn - 1)) {
+            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc + 1)) && (((_m = (_l = document.getElementById((Cr + 1) + '-' + (Cc + 1))) === null || _l === void 0 ? void 0 : _l.parentElement) === null || _m === void 0 ? void 0 : _m.className) != "checked")) {
+                coverIDAr.push((Cr + 1) + '-' + (Cc + 1));
+            }
         }
-        if (Crn < rn - 1) {
-            coverIDAr.push((Crn + 1) + '-' + Ccn);
+        if (Cr < rn - 1) {
+            if (!coverIDAr.includes((Cr + 1) + '-' + Cc) && (((_p = (_o = document.getElementById((Cr + 1) + '-' + Cc)) === null || _o === void 0 ? void 0 : _o.parentElement) === null || _p === void 0 ? void 0 : _p.className) != "checked")) {
+                coverIDAr.push((Cr + 1) + '-' + Cc);
+            }
         }
-        if ((Crn < rn - 1) && (Ccn > 0)) {
-            coverIDAr.push((Crn + 1) + '-' + (Ccn - 1));
+        if ((Cr < rn - 1) && (Cc > 0)) {
+            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc - 1)) && (((_r = (_q = document.getElementById((Cr + 1) + '-' + (Cc - 1))) === null || _q === void 0 ? void 0 : _q.parentElement) === null || _r === void 0 ? void 0 : _r.className) != "checked")) {
+                coverIDAr.push((Cr + 1) + '-' + (Cc - 1));
+            }
         }
-        if (Ccn > 0) {
-            coverIDAr.push(Crn + '-' + (Ccn - 1));
+        if (Cc > 0) {
+            if (!coverIDAr.includes(Cr + '-' + (Cc - 1)) && (((_t = (_s = document.getElementById(Cr + '-' + (Cc - 1))) === null || _s === void 0 ? void 0 : _s.parentElement) === null || _t === void 0 ? void 0 : _t.className) != "checked")) {
+                coverIDAr.push(Cr + '-' + (Cc - 1));
+            }
         }
         console.log(coverIDAr);
     }
-    openCells(coverIDAr);
+    expandCells(coverIDAr);
 }
-function openCells(tempCoverID) {
-    var _a;
+function expandCells(tempCoverID) {
+    var _a, _b, _c;
+    var openId;
     for (var d = 0; d < tempCoverID.length; d++) {
         var CurrentcoverID = tempCoverID[d];
         var PcoverEl = (_a = document.getElementById(CurrentcoverID)) === null || _a === void 0 ? void 0 : _a.parentElement;
         if ((PcoverEl === null || PcoverEl === void 0 ? void 0 : PcoverEl.className) != "bombimg") { //checking if the neighboring cells doesn't have bomb.
-            openCoverID.push(CurrentcoverID);
-            var openId = CurrentcoverID.split('-');
-            var Orno = +openId[0];
-            var Ocno = +openId[1];
             document.getElementById(CurrentcoverID).style.display = "none";
-            expandCells(Orno, Ocno);
+            (_b = document.getElementById(CurrentcoverID).parentElement) === null || _b === void 0 ? void 0 : _b.classList.add("checked");
+        }
+        if (d == (tempCoverID.length - 1)) {
+            for (var z = (tempCoverID.length - 1); z >= 0; z--) {
+                // console.log("hey", tempCoverID[z]);
+                openId = tempCoverID[z];
+                var openPid = (_c = document.getElementById(openId)) === null || _c === void 0 ? void 0 : _c.parentElement;
+                console.log(openPid === null || openPid === void 0 ? void 0 : openPid.className);
+                if ((openPid === null || openPid === void 0 ? void 0 : openPid.className) == "cell") {
+                    // coverRemove(openId);
+                    console.log("true");
+                }
+                else {
+                    console.log("false");
+                    z--;
+                }
+            }
         }
     }
 }
+function Reset() {
+    location.reload();
+}
+// function openCells(tempCoverID:string[]){
+// }
 // function FurtherExpand(Or:number, Oc:number){
 //         if((Or>0) && (Oc>0)){
 //             if( !openCoverID.includes((Or-1)+'-'+(Oc-1)) ){
@@ -272,6 +306,18 @@ function openCells(tempCoverID) {
 //                 openCoverID.push(Or+'-'+(Oc-1));
 //             }
 //         }
+//    for( let z=0; z<coverIDAr.length; z++){ //lastly commented
+//     let checkID = coverIDAr[z];
+//     let ppid = document.getElementById(checkID)?.parentElement;
+//     if( ppid?.className != "bombimg" && ppid?.className == "numberCell"){
+//         openCells(coverIDAr);
+//         return;
+//     }
+//     let openId = checkID.split('-');
+//     let Or = +openId[0];
+//     let Oc = +openId[1];
+//     expandCells(Or, Oc)
+// }
 //     console.log(openCoverID);
 //     for( let z=0; z<openCoverID.length; z++){
 //         let opCoID = openCoverID[z];
@@ -287,9 +333,6 @@ function openCells(tempCoverID) {
 //         }
 //     }
 // }
-function Reset() {
-    location.reload();
-}
 // c1 = 'cell'+(x-1)+""+(y-1);
 // c2 = 'cell'+(x-1)+""+(y);
 // c3 = 'cell'+(x-1)+""+(y+1);

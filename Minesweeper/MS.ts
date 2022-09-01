@@ -4,6 +4,7 @@ var colcell:HTMLTableCellElement, rowcell:HTMLTableRowElement, bt:HTMLButtonElem
 var bIDAr:string[] = [];
 var bombAr:string[] = [];
 var openCoverID:string[] = [];
+let coverIDAr:string[] = [];
 var rn:any, cn:any, mn:any, count:number = 0, mineID:string;
 var c1:string, c2: string, c3:string, c4:string, c5:string, c6:string, c7:string, c8:string;
 
@@ -30,7 +31,7 @@ function makeTable() {
             colcell.appendChild(CoverBtn);
             CoverBtn.setAttribute('id', r+'-'+c);
             CoverBtn.classList.add('Cover');
-            CoverBtn.setAttribute("onclick", "coverRemove(this.id)")
+            CoverBtn.setAttribute("onclick", "checkCover(this.id)")
             CoverBtn.setAttribute("oncontextmenu", "handleRightClick(this.id, event)")
             putB = 'cell'+r+'-'+c;
             bIDAr.push(putB);
@@ -154,12 +155,12 @@ function handleRightClick(id: string, event: any){
     event.stopPropagation();
     let FlaggedCell = <HTMLButtonElement>document.getElementById(id);
     let parentEl = (<HTMLTableCellElement>document.getElementById(id)).parentElement;
-
     if(FlaggedCell.innerHTML == "🚩"){ // checking if the cell already has flag..if so this condition will remove and replace all the onclicks which was kept null on placing the flags
         FlaggedCell.innerHTML = " ";
         FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
         if(parentEl?.className == "bombimg"){ //again checking if the flagged cell is bomb cell if so this condition will replace CLICKEDBOMB onclick func.
-            parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)")
+            parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
+            minesFlagged--;
         }
     }
 
@@ -177,72 +178,109 @@ function handleRightClick(id: string, event: any){
     }
 }
 
-function coverRemove(coverID:string){
-    console.log(coverID);
-    if((<HTMLButtonElement>document.getElementById(coverID)).parentElement?.className == "bombimg"){  //checking this condition here because for expanding bombcells will be filtered out so its cover wont be removed and user wont be able to see the bomb..
-        (<HTMLButtonElement>document.getElementById(coverID)).style.display = "none"; 
+function checkCover(checkID:string){
+    if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.className == "bombimg"){  //checking this condition here because for expanding bombcells will be filtered out so its cover wont be removed and user wont be able to see the bomb..
+        (<HTMLButtonElement>document.getElementById(checkID)).style.display = "none"; 
     }
     else{
-        var tempID = coverID.split('-');
-        let Cr = tempID[0];
-        let Cc = tempID[1];
-        console.log(+Cr, +Cc);
-        expandCells(+Cr, +Cc);    
+        coverRemove(checkID);
     }
 }
 
-function expandCells(Crn:number, Ccn:number){
-    let coverIDAr = [];
-    let Tid = Crn+'-'+Ccn;
-    let TidElement = document.getElementById(Tid);
+function coverRemove(coverID:string){
+
+    var tempID = coverID.split('-');
+    let Cr = +tempID[0];
+    let Cc = +tempID[1];
+    console.log(+Cr, +Cc);
+    
+    let TidElement = document.getElementById(coverID);
     if(TidElement?.parentElement?.className!= "bombimg"){
-        (<HTMLButtonElement>document.getElementById(Tid)).style.display = "none";
-        if((Crn>0) && (Ccn>0)){
-            coverIDAr.push((Crn-1)+'-'+(Ccn-1));
+        (<HTMLButtonElement>document.getElementById(coverID)).style.display = "none";
+        (<HTMLButtonElement>document.getElementById(coverID)).parentElement?.classList.add("checked");
+        if((Cr>0) && (Cc>0)){
+            if(!coverIDAr.includes((Cr-1)+'-'+(Cc-1)) && (document.getElementById((Cr-1)+'-'+(Cc-1))?.parentElement?.className!= "checked" )){
+                coverIDAr.push((Cr-1)+'-'+(Cc-1));
+            }
         }
-        if(Crn>0){
-            coverIDAr.push((Crn-1)+'-'+Ccn);
+        if(Cr>0){
+            if(!coverIDAr.includes((Cr-1)+'-'+Cc) && (document.getElementById((Cr-1)+'-'+Cc)?.parentElement?.className!= "checked") ){
+                coverIDAr.push((Cr-1)+'-'+Cc);
+            }
         }
-        if((Crn>0) && (Ccn<cn-1)){
-            coverIDAr.push((Crn-1)+'-'+(Ccn+1));
+        if((Cr>0) && (Cc<cn-1)){
+            if(!coverIDAr.includes((Cr-1)+'-'+(Cc+1)) && (document.getElementById((Cr-1)+'-'+(Cc+1))?.parentElement?.className!= "checked") ){
+                coverIDAr.push((Cr-1)+'-'+(Cc+1));
+            }
         }
-        if(Ccn<cn-1) {
-            coverIDAr.push(Crn+'-'+(Ccn+1));
+        if(Cc<cn-1) {
+            if(!coverIDAr.includes(Cr+'-'+(Cc+1)) && (document.getElementById(Cr+'-'+(Cc+1))?.parentElement?.className!= "checked") ){
+                coverIDAr.push(Cr+'-'+(Cc+1));
+            }
         }
-        if((Crn<rn-1) && (Ccn<cn-1)){
-            coverIDAr.push((Crn+1)+'-'+(Ccn+1));
+        if((Cr<rn-1) && (Cc<cn-1)){
+            if(!coverIDAr.includes((Cr+1)+'-'+(Cc+1)) && (document.getElementById((Cr+1)+'-'+(Cc+1))?.parentElement?.className!= "checked") ){
+                coverIDAr.push((Cr+1)+'-'+(Cc+1));
+            }
         }
-        if(Crn<rn-1){
-            coverIDAr.push((Crn+1)+'-'+Ccn);
+        if(Cr<rn-1){
+            if(!coverIDAr.includes((Cr+1)+'-'+Cc) && (document.getElementById((Cr+1)+'-'+Cc)?.parentElement?.className!= "checked") ){
+                coverIDAr.push((Cr+1)+'-'+Cc);
+            }
         }
-        if((Crn<rn-1) && (Ccn>0)){
-            coverIDAr.push((Crn+1)+'-'+(Ccn-1));
+        if((Cr<rn-1) && (Cc>0)){
+            if(!coverIDAr.includes((Cr+1)+'-'+(Cc-1)) && (document.getElementById((Cr+1)+'-'+(Cc-1))?.parentElement?.className!= "checked") ){
+                coverIDAr.push((Cr+1)+'-'+(Cc-1));   
+            }
         }
-        if(Ccn>0){
-            coverIDAr.push(Crn+'-'+(Ccn-1));
+        if(Cc>0){
+            if(!coverIDAr.includes(Cr+'-'+(Cc-1)) && (document.getElementById(Cr+'-'+(Cc-1))?.parentElement?.className!= "checked") ){
+                coverIDAr.push(Cr+'-'+(Cc-1));
+            }
         }
         console.log(coverIDAr);
-        }
-        openCells(coverIDAr);
-}    
+    }
+    expandCells(coverIDAr); 
+   
+}
 
-function openCells(tempCoverID:string[]){
-    let openId, Or:number, Oc;
+function expandCells(tempCoverID:string[]){
+    let openId;
     for(let d=0; d<tempCoverID.length; d++){
         let CurrentcoverID = tempCoverID[d];
         let PcoverEl = document.getElementById(CurrentcoverID)?.parentElement;
         if( PcoverEl?.className != "bombimg"){ //checking if the neighboring cells doesn't have bomb.
-            openCoverID.push(CurrentcoverID);
-            openId = CurrentcoverID.split('-');
-            let Oro = +openId[0];
-            let Oco = +openId[1];
-            Or = Oro;
-            Oc = Oco;
             (<HTMLButtonElement>document.getElementById(CurrentcoverID)).style.display = "none";
+            (<HTMLTableCellElement>document.getElementById(CurrentcoverID)).parentElement?.classList.add("checked");
         }
+
+        if( d == (tempCoverID.length - 1) ){
+            for(let z = (tempCoverID.length - 1); z>=0; z--){
+                // console.log("hey", tempCoverID[z]);
+                openId = tempCoverID[z];
+                let openPid = document.getElementById(openId)?.parentElement;
+                console.log(openPid?.className);
+                if( openPid?.className == "cell"){
+                    // coverRemove(openId);
+                    console.log("true");
+                }
+                else{
+                    console.log("false");
+                    z--;
+                }
+            }
+        }
+    }
+}    
+
+
+function Reset() {
+    location.reload();
 }
-expandCells(Or, Oc);
-}
+// function openCells(tempCoverID:string[]){
+
+// }
+
 // function FurtherExpand(Or:number, Oc:number){
         
 //         if((Or>0) && (Oc>0)){
@@ -285,6 +323,18 @@ expandCells(Or, Oc);
 //                 openCoverID.push(Or+'-'+(Oc-1));
 //             }
 //         }
+//    for( let z=0; z<coverIDAr.length; z++){ //lastly commented
+//     let checkID = coverIDAr[z];
+//     let ppid = document.getElementById(checkID)?.parentElement;
+//     if( ppid?.className != "bombimg" && ppid?.className == "numberCell"){
+//         openCells(coverIDAr);
+//         return;
+//     }
+//     let openId = checkID.split('-');
+//     let Or = +openId[0];
+//     let Oc = +openId[1];
+//     expandCells(Or, Oc)
+// }
 //     console.log(openCoverID);
 //     for( let z=0; z<openCoverID.length; z++){
 //         let opCoID = openCoverID[z];
@@ -303,9 +353,7 @@ expandCells(Or, Oc);
 
 // }
 
-function Reset() {
-    location.reload();
-}
+
 
 
 
