@@ -21,7 +21,6 @@ function makeTable() {
         rowcell = document.getElementById("boxCont").insertRow(r);
         rowcell.setAttribute('class', 'cell-cont');
         for (c = 0; c < cno; c++) {
-            var f = 0;
             colcell = rowcell.insertCell(c);
             colcell.setAttribute('class', 'cell');
             colcell.setAttribute('id', 'cell' + r + '-' + c);
@@ -33,7 +32,6 @@ function makeTable() {
             CoverBtn_1.setAttribute("oncontextmenu", "handleRightClick(this.id, event)");
             putB = 'cell' + r + '-' + c;
             bIDAr.push(putB);
-            f++;
         }
     }
     setBomb();
@@ -159,24 +157,22 @@ function handleRightClick(id, event) {
     event.stopPropagation();
     var FlaggedCell = document.getElementById(id);
     var parentEl = document.getElementById(id).parentElement;
-    if (FlaggedCell.innerHTML == "🚩") { // checking if the cell already has flag..if so this condition will remove and replace all the onclicks which was kept null on placing the flags
+    if (FlaggedCell.innerHTML == "🚩") {
         FlaggedCell.innerHTML = " ";
-        FlaggedCell.classList.remove("flagged");
-        FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
-        if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") { //again checking if the flagged cell is bomb cell if so this condition will replace CLICKEDBOMB onclick func.
+        // FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
+        if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") {
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
             minesFlagged--;
         }
     }
     else {
         FlaggedCell.innerHTML = "🚩";
-        FlaggedCell.classList.add("flagged");
         FlaggedCell.removeAttribute('onclick');
-        if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") { //to check if the flagged cell has bomb if so to disable its onclick fns.
+        if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") {
             parentEl === null || parentEl === void 0 ? void 0 : parentEl.removeAttribute("onclick");
             minesFlagged++;
             console.log(minesFlagged);
-            if (minesFlagged == mn) { //when minesFlagged is equal to mine number input then user wins.
+            if (minesFlagged == mn) {
                 document.getElementById('gWon').style.display = "block";
             }
         }
@@ -184,19 +180,19 @@ function handleRightClick(id, event) {
 }
 function checkCover(checkID) {
     var _a, _b, _c;
+    console.log(checkID);
     coverIDAr = [];
-    if (((_a = document.getElementById(checkID).parentElement) === null || _a === void 0 ? void 0 : _a.className) == "bombimg") { //checking this condition here because user wont be able to see the bomb..
+    if (((_a = document.getElementById(checkID).parentElement) === null || _a === void 0 ? void 0 : _a.className) == "bombimg") {
         document.getElementById(checkID).style.display = "none";
         console.log('It is a bombcell');
         return;
     }
-    if ((_b = document.getElementById(checkID).parentElement) === null || _b === void 0 ? void 0 : _b.classList.contains("numberCell")) { //no need to expand if it is a numbercell 
+    if ((_b = document.getElementById(checkID).parentElement) === null || _b === void 0 ? void 0 : _b.classList.contains("numberCell")) {
         document.getElementById(checkID).style.display = "none";
         console.log('It is a numbercell');
         return;
-        // coverRemove(checkID);
     }
-    if ((_c = document.getElementById(checkID).parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("cell")) { //expanding cells only when its an empty cell
+    if ((_c = document.getElementById(checkID).parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("cell")) {
         console.log('It is a cell');
         coverIDAr.push(checkID);
         var tempID = checkID.split('-');
@@ -209,13 +205,13 @@ function checkCover(checkID) {
 function expCells(Cr, Cc) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     if ((Cr > 0) && (Cc > 0)) {
-        if ((_a = document.getElementById((Cr - 1) + '-' + (Cc - 1)).parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("numberCell")) { //if adj cell is a numbercell push it and stop..no need to expland further
+        if ((_a = document.getElementById((Cr - 1) + '-' + (Cc - 1)).parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1))) {
                 // console.log('if works');
                 coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
             }
         }
-        else { // when adj cell is empty apply recursion 
+        else {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1))) {
                 coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
                 // console.log('else works');

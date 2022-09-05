@@ -163,9 +163,8 @@ function handleRightClick(id: string, event: any){
     event.stopPropagation();
     let FlaggedCell = <HTMLButtonElement>document.getElementById(id);
     let parentEl = (<HTMLTableCellElement>document.getElementById(id)).parentElement;
-    if(FlaggedCell.innerHTML == "🚩"){ // checking if the cell already has flag..if so this condition will remove and replace all the onclicks which was kept null on placing the flags
+    if(FlaggedCell.innerHTML == "🚩"){ 
         FlaggedCell.innerHTML = " ";
-        FlaggedCell.classList.remove("flagged");
         FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
         if(parentEl?.className == "bombimg"){ 
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
@@ -175,9 +174,8 @@ function handleRightClick(id: string, event: any){
 
     else{
         FlaggedCell.innerHTML = "🚩";
-        FlaggedCell.classList.add("flagged");
         FlaggedCell.removeAttribute('onclick');
-        if(parentEl?.className == "bombimg"){  //to check if the flagged cell has bomb if so to disable its onclick fns.
+        if(parentEl?.className == "bombimg"){  
             parentEl?.removeAttribute("onclick");
             minesFlagged++;
             console.log(minesFlagged);
@@ -189,19 +187,19 @@ function handleRightClick(id: string, event: any){
 }
 
 function checkCover(checkID:string){
+    console.log(checkID);
     coverIDAr = [];
-    if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.className == "bombimg"){  //checking this condition here because user wont be able to see the bomb..
+    if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.className == "bombimg"){ 
         (<HTMLButtonElement>document.getElementById(checkID)).style.display = "none"; 
         console.log('It is a bombcell');
         return;
     }
-    if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.classList.contains("numberCell")){ //no need to expand if it is a numbercell 
+    if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.classList.contains("numberCell")){ 
         (<HTMLButtonElement>document.getElementById(checkID)).style.display = "none"; 
         console.log('It is a numbercell');
         return;
-        // coverRemove(checkID);
     }
-    if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.classList.contains("cell")){ //expanding cells only when its an empty cell
+    if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.classList.contains("cell")){ 
         console.log('It is a cell');
         coverIDAr.push(checkID);
         var tempID = checkID.split('-');
@@ -214,13 +212,13 @@ function checkCover(checkID:string){
 
 function expCells(Cr:number, Cc:number){
     if((Cr>0) && (Cc>0)){
-        if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){ //if adj cell is a numbercell push it and stop..no need to expland further
+        if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){ 
             if( !coverIDAr.includes((Cr-1)+'-'+(Cc-1)) ){ 
                 // console.log('if works');
                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
             }
         }
-        else{ // when adj cell is empty apply recursion 
+        else{ 
             if( !coverIDAr.includes((Cr-1)+'-'+(Cc-1)) ){
                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
                 // console.log('else works');
