@@ -11,11 +11,11 @@
     <h1 id="heading">MINESWEEPER</h1>
     <section class="lables">
         <label for ="rows" class="LableRC" id="roww"> Rows : </label>
-        <input type="number" class="InputRC"  name="rows" id ="rno" value="5" min="1"/> 
+        <input type="number" class="InputRC"  name="rows" id ="rno" value="15" min="1"/> 
         <label for ="columns" class="LableRC" id="col"> Columns : </label>
-        <input type="number" class="InputRC" name="column" id ="cno" value="5" min="1"/>
+        <input type="number" class="InputRC" name="column" id ="cno" value="15" min="1"/>
         <label for ="bombs" class="LableRC" id="bomb"> Mines : </label>
-        <input type="number" class="InputRC" name="Bombs" id ="bmb" min="1" value="5">
+        <input type="number" class="InputRC" name="Bombs" id ="bmb" min="1" value="16">
         <P id="Mcount"></P>
         <div>
             <button type="button" class="button" id="btn" onclick="makeTable()">START</button>
@@ -24,8 +24,9 @@
     </section>
     <section class="MSgame">
         <p id="gWon">🎉 CONGRATS YOU WON!! 💐</p>
-        <table id="boxCont" ></table>
         <p id="gOver">❌ GAME OVER ❌</p>
+        <table id="boxCont" ></table>
+        
         
     </section>
     <script src="./MS.js" defer></script>

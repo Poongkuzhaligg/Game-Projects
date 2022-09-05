@@ -4,7 +4,7 @@ var colcell, rowcell, bt, initC, CoverBtn, MinesC;
 var bIDAr = [];
 var bombAr = [];
 var openCoverID = [];
-var coverIDAr = [];
+var coverIDAr;
 var rn, cn, mn, count = 0, mineID;
 var c1, c2, c3, c4, c5, c6, c7, c8;
 function makeTable() {
@@ -41,7 +41,7 @@ function makeTable() {
 }
 function setBomb() {
     var _a;
-    console.log(bIDAr);
+    // console.log(bIDAr);
     var Mno = +(bomb.value);
     mn = Mno;
     for (var i = 0; i < Mno; i++) {
@@ -50,7 +50,7 @@ function setBomb() {
             bombAr.push(mineID);
             document.getElementById(mineID).setAttribute("class", "bombimg");
             (_a = document.getElementById(mineID)) === null || _a === void 0 ? void 0 : _a.setAttribute("onclick", "setTimeout(clickBomb,500)");
-            console.log(mineID);
+            // console.log(mineID);
         }
         else {
             i--;
@@ -58,7 +58,16 @@ function setBomb() {
     }
 }
 function clickBomb() {
-    document.getElementById("boxCont").style.display = "none";
+    var _a;
+    for (var s = 0; s < rn; s++) {
+        for (var w = 0; w < cn; w++) {
+            var findBcell = document.getElementById(s + '-' + w);
+            if ((_a = findBcell.parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("bombimg")) {
+                findBcell.style.display = "none";
+            }
+        }
+    }
+    // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
     var gameOver = document.getElementById('gOver').style.display = "block";
 }
 function setNos() {
@@ -77,7 +86,7 @@ function setNos() {
 }
 function setNumber(u, v) {
     var adjCells = [];
-    console.log((rn - 1), (cn - 1));
+    // console.log((rn-1),(cn-1));
     if ((u > 0) && (v > 0)) {
         adjCells.push('cell' + (u - 1) + '-' + (v - 1));
     }
@@ -150,6 +159,7 @@ function handleRightClick(id, event) {
     var parentEl = document.getElementById(id).parentElement;
     if (FlaggedCell.innerHTML == "🚩") { // checking if the cell already has flag..if so this condition will remove and replace all the onclicks which was kept null on placing the flags
         FlaggedCell.innerHTML = " ";
+        FlaggedCell.classList.remove("flagged");
         FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
         if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") { //again checking if the flagged cell is bomb cell if so this condition will replace CLICKEDBOMB onclick func.
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
@@ -158,8 +168,9 @@ function handleRightClick(id, event) {
     }
     else {
         FlaggedCell.innerHTML = "🚩";
+        FlaggedCell.classList.add("flagged");
         FlaggedCell.removeAttribute('onclick');
-        if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") { //to check if the flagged cell has bomb if so to enable its onclick fns.
+        if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") { //to check if the flagged cell has bomb if so to disable its onclick fns.
             parentEl === null || parentEl === void 0 ? void 0 : parentEl.removeAttribute("onclick");
             minesFlagged++;
             console.log(minesFlagged);
@@ -170,99 +181,224 @@ function handleRightClick(id, event) {
     }
 }
 function checkCover(checkID) {
-    var _a;
-    if (((_a = document.getElementById(checkID).parentElement) === null || _a === void 0 ? void 0 : _a.className) == "bombimg") { //checking this condition here because for expanding bombcells will be filtered out so its cover wont be removed and user wont be able to see the bomb..
+    var _a, _b, _c;
+    coverIDAr = [];
+    if (((_a = document.getElementById(checkID).parentElement) === null || _a === void 0 ? void 0 : _a.className) == "bombimg") { //checking this condition here because user wont be able to see the bomb..
         document.getElementById(checkID).style.display = "none";
+        console.log('It is a bombcell');
+        return;
     }
-    else {
-        coverRemove(checkID);
+    if ((_b = document.getElementById(checkID).parentElement) === null || _b === void 0 ? void 0 : _b.classList.contains("numberCell")) { //no need to expand if it is a numbercell 
+        document.getElementById(checkID).style.display = "none";
+        console.log('It is a numbercell');
+        return;
+        // coverRemove(checkID);
+    }
+    if ((_c = document.getElementById(checkID).parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("cell")) { //expanding cells only when its an empty cell
+        console.log('It is a cell');
+        coverIDAr.push(checkID);
+        var tempID = checkID.split('-');
+        var Crn = +tempID[0];
+        var Ccn = +tempID[1];
+        console.log("it works");
+        expCells(Crn, Ccn);
     }
 }
-function coverRemove(coverID) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
-    var tempID = coverID.split('-');
-    var Cr = +tempID[0];
-    var Cc = +tempID[1];
-    console.log(+Cr, +Cc);
-    var TidElement = document.getElementById(coverID);
-    if (((_a = TidElement === null || TidElement === void 0 ? void 0 : TidElement.parentElement) === null || _a === void 0 ? void 0 : _a.className) != "bombimg") {
-        document.getElementById(coverID).style.display = "none";
-        (_b = document.getElementById(coverID).parentElement) === null || _b === void 0 ? void 0 : _b.classList.add("checked");
-        if ((Cr > 0) && (Cc > 0)) {
-            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1)) && (((_d = (_c = document.getElementById((Cr - 1) + '-' + (Cc - 1))) === null || _c === void 0 ? void 0 : _c.parentElement) === null || _d === void 0 ? void 0 : _d.className) != "checked")) {
+function expCells(Cr, Cc) {
+    var _a, _b, _c, _d, _e, _f, _g, _h;
+    if ((Cr > 0) && (Cc > 0)) {
+        if ((_a = document.getElementById((Cr - 1) + '-' + (Cc - 1)).parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("numberCell")) { //if adj cell is a numbercell push it and stop..no need to expland further
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1))) {
+                // console.log('if works');
                 coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
             }
         }
-        if (Cr > 0) {
-            if (!coverIDAr.includes((Cr - 1) + '-' + Cc) && (((_f = (_e = document.getElementById((Cr - 1) + '-' + Cc)) === null || _e === void 0 ? void 0 : _e.parentElement) === null || _f === void 0 ? void 0 : _f.className) != "checked")) {
-                coverIDAr.push((Cr - 1) + '-' + Cc);
+        else { // when adj cell is empty apply recursion 
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1))) {
+                coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
+                // console.log('else works');
+                expCells((Cr - 1), (Cc - 1));
             }
         }
-        if ((Cr > 0) && (Cc < cn - 1)) {
-            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc + 1)) && (((_h = (_g = document.getElementById((Cr - 1) + '-' + (Cc + 1))) === null || _g === void 0 ? void 0 : _g.parentElement) === null || _h === void 0 ? void 0 : _h.className) != "checked")) {
+    }
+    if (Cr > 0) {
+        if ((_b = document.getElementById((Cr - 1) + '-' + (Cc)).parentElement) === null || _b === void 0 ? void 0 : _b.classList.contains("numberCell")) {
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc))) {
+                // console.log('if works');
+                coverIDAr.push((Cr - 1) + '-' + (Cc));
+            }
+        }
+        else {
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc))) {
+                coverIDAr.push((Cr - 1) + '-' + (Cc));
+                // console.log('else works');
+                expCells((Cr - 1), (Cc));
+            }
+        }
+    }
+    if ((Cr > 0) && (Cc < cn - 1)) {
+        if ((_c = document.getElementById((Cr - 1) + '-' + (Cc + 1)).parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("numberCell")) {
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc + 1))) {
+                // console.log('if works');
                 coverIDAr.push((Cr - 1) + '-' + (Cc + 1));
             }
         }
-        if (Cc < cn - 1) {
-            if (!coverIDAr.includes(Cr + '-' + (Cc + 1)) && (((_k = (_j = document.getElementById(Cr + '-' + (Cc + 1))) === null || _j === void 0 ? void 0 : _j.parentElement) === null || _k === void 0 ? void 0 : _k.className) != "checked")) {
+        else {
+            if (!coverIDAr.includes((Cr - 1) + '-' + (Cc + 1))) {
+                coverIDAr.push((Cr - 1) + '-' + (Cc + 1));
+                // console.log('else works');
+                expCells((Cr - 1), (Cc + 1));
+            }
+        }
+    }
+    if (Cc < cn - 1) {
+        if ((_d = document.getElementById((Cr) + '-' + (Cc + 1)).parentElement) === null || _d === void 0 ? void 0 : _d.classList.contains("numberCell")) {
+            if (!coverIDAr.includes((Cr) + '-' + (Cc + 1))) {
+                // console.log('if works');
                 coverIDAr.push(Cr + '-' + (Cc + 1));
             }
         }
-        if ((Cr < rn - 1) && (Cc < cn - 1)) {
-            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc + 1)) && (((_m = (_l = document.getElementById((Cr + 1) + '-' + (Cc + 1))) === null || _l === void 0 ? void 0 : _l.parentElement) === null || _m === void 0 ? void 0 : _m.className) != "checked")) {
+        else {
+            if (!coverIDAr.includes((Cr) + '-' + (Cc + 1))) {
+                coverIDAr.push((Cr) + '-' + (Cc + 1));
+                // console.log('else works');
+                expCells((Cr), (Cc + 1));
+            }
+        }
+    }
+    if ((Cr < rn - 1) && (Cc < cn - 1)) {
+        if ((_e = document.getElementById((Cr + 1) + '-' + (Cc + 1)).parentElement) === null || _e === void 0 ? void 0 : _e.classList.contains("numberCell")) {
+            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc + 1))) {
                 coverIDAr.push((Cr + 1) + '-' + (Cc + 1));
             }
         }
-        if (Cr < rn - 1) {
-            if (!coverIDAr.includes((Cr + 1) + '-' + Cc) && (((_p = (_o = document.getElementById((Cr + 1) + '-' + Cc)) === null || _o === void 0 ? void 0 : _o.parentElement) === null || _p === void 0 ? void 0 : _p.className) != "checked")) {
+        else {
+            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc + 1))) {
+                coverIDAr.push((Cr + 1) + '-' + (Cc + 1));
+                expCells((Cr + 1), (Cc + 1));
+            }
+        }
+    }
+    if (Cr < rn - 1) {
+        if ((_f = document.getElementById((Cr + 1) + '-' + (Cc)).parentElement) === null || _f === void 0 ? void 0 : _f.classList.contains("numberCell")) {
+            if (!coverIDAr.includes((Cr + 1) + '-' + Cc)) {
                 coverIDAr.push((Cr + 1) + '-' + Cc);
             }
         }
-        if ((Cr < rn - 1) && (Cc > 0)) {
-            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc - 1)) && (((_r = (_q = document.getElementById((Cr + 1) + '-' + (Cc - 1))) === null || _q === void 0 ? void 0 : _q.parentElement) === null || _r === void 0 ? void 0 : _r.className) != "checked")) {
+        else {
+            if (!coverIDAr.includes((Cr + 1) + '-' + Cc)) {
+                coverIDAr.push((Cr + 1) + '-' + Cc);
+                expCells((Cr + 1), Cc);
+            }
+        }
+    }
+    if ((Cr < rn - 1) && (Cc > 0)) {
+        if ((_g = document.getElementById((Cr + 1) + '-' + (Cc - 1)).parentElement) === null || _g === void 0 ? void 0 : _g.classList.contains("numberCell")) {
+            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc - 1))) {
                 coverIDAr.push((Cr + 1) + '-' + (Cc - 1));
             }
         }
-        if (Cc > 0) {
-            if (!coverIDAr.includes(Cr + '-' + (Cc - 1)) && (((_t = (_s = document.getElementById(Cr + '-' + (Cc - 1))) === null || _s === void 0 ? void 0 : _s.parentElement) === null || _t === void 0 ? void 0 : _t.className) != "checked")) {
+        else {
+            if (!coverIDAr.includes((Cr + 1) + '-' + (Cc - 1))) {
+                coverIDAr.push((Cr + 1) + '-' + (Cc - 1));
+                expCells((Cr + 1), (Cc - 1));
+            }
+        }
+    }
+    if (Cc > 0) {
+        if ((_h = document.getElementById((Cr) + '-' + (Cc - 1)).parentElement) === null || _h === void 0 ? void 0 : _h.classList.contains("numberCell")) {
+            if (!coverIDAr.includes(Cr + '-' + (Cc - 1))) {
                 coverIDAr.push(Cr + '-' + (Cc - 1));
             }
         }
-        console.log(coverIDAr);
-    }
-    expandCells(coverIDAr);
-}
-function expandCells(tempCoverID) {
-    var _a, _b, _c;
-    var openId;
-    for (var d = 0; d < tempCoverID.length; d++) {
-        var CurrentcoverID = tempCoverID[d];
-        var PcoverEl = (_a = document.getElementById(CurrentcoverID)) === null || _a === void 0 ? void 0 : _a.parentElement;
-        if ((PcoverEl === null || PcoverEl === void 0 ? void 0 : PcoverEl.className) != "bombimg") { //checking if the neighboring cells doesn't have bomb.
-            document.getElementById(CurrentcoverID).style.display = "none";
-            (_b = document.getElementById(CurrentcoverID).parentElement) === null || _b === void 0 ? void 0 : _b.classList.add("checked");
-        }
-        if (d == (tempCoverID.length - 1)) {
-            for (var z = (tempCoverID.length - 1); z >= 0; z--) {
-                // console.log("hey", tempCoverID[z]);
-                openId = tempCoverID[z];
-                var openPid = (_c = document.getElementById(openId)) === null || _c === void 0 ? void 0 : _c.parentElement;
-                console.log(openPid === null || openPid === void 0 ? void 0 : openPid.className);
-                if ((openPid === null || openPid === void 0 ? void 0 : openPid.className) == "cell") {
-                    // coverRemove(openId);
-                    console.log("true");
-                }
-                else {
-                    console.log("false");
-                    z--;
-                }
+        else {
+            if (!coverIDAr.includes(Cr + '-' + (Cc - 1))) {
+                coverIDAr.push(Cr + '-' + (Cc - 1));
+                expCells(Cr, (Cc - 1));
             }
         }
+    }
+    console.log(coverIDAr);
+    coverRemove(coverIDAr);
+}
+function coverRemove(coverID) {
+    for (var z = 0; z < coverID.length; z++) {
+        document.getElementById(coverID[z]).style.display = "none";
     }
 }
 function Reset() {
     location.reload();
 }
+// }
+//     var tempID = coverID.split('-');
+//     let Cr = +tempID[0];
+//     let Cc = +tempID[1];
+//     console.log(+Cr, +Cc);
+//     let TidElement = document.getElementById(coverID);
+//     if(TidElement?.parentElement?.className!= "bombimg"){
+//     (<HTMLButtonElement>document.getElementById(coverID)).style.display = "none";
+//     (<HTMLButtonElement>document.getElementById(coverID)).parentElement?.classList.add("checked");
+//         if((Cr>0) && (Cc>0)){
+//             if(!coverIDAr.includes((Cr-1)+'-'+(Cc-1))){
+//                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
+//             }
+//         }
+//         if(Cr>0){
+//             if(!coverIDAr.includes((Cr-1)+'-'+Cc) ){
+//                 coverIDAr.push((Cr-1)+'-'+Cc);
+//             }
+//         }
+//         if((Cr>0) && (Cc<cn-1)){
+//             if(!coverIDAr.includes((Cr-1)+'-'+(Cc+1)) ){
+//                 coverIDAr.push((Cr-1)+'-'+(Cc+1));
+//             }
+//         }
+//         if(Cc<cn-1) {
+//             if(!coverIDAr.includes(Cr+'-'+(Cc+1)) ){
+//                 coverIDAr.push(Cr+'-'+(Cc+1));
+//             }
+//         }
+//         if((Cr<rn-1) && (Cc<cn-1)){
+//             if(!coverIDAr.includes((Cr+1)+'-'+(Cc+1)) ){
+//                 coverIDAr.push((Cr+1)+'-'+(Cc+1));
+//             }
+//         }
+//         if(Cr<rn-1){
+//             if(!coverIDAr.includes((Cr+1)+'-'+Cc) ){
+//                 coverIDAr.push((Cr+1)+'-'+Cc);
+//             }
+//         }
+//         if((Cr<rn-1) && (Cc>0)){
+//             if(!coverIDAr.includes((Cr+1)+'-'+(Cc-1)) ){
+//                 coverIDAr.push((Cr+1)+'-'+(Cc-1));   
+//             }
+//         }
+//         if(Cc>0){
+//             if(!coverIDAr.includes(Cr+'-'+(Cc-1)) ){
+//                 coverIDAr.push(Cr+'-'+(Cc-1));
+//             }
+//         }
+//         console.log(coverIDAr);
+//     }
+//     expandCells(coverIDAr); 
+// }
+// function expandCells(tempCoverID:string[]){
+//     let openId;
+//     for(let d=0; d<tempCoverID.length; d++){
+//         let CurrentcoverID = tempCoverID[d];
+//         let PcoverEl = document.getElementById(CurrentcoverID)?.parentElement;
+//         if( PcoverEl?.className != "bombimg"){ //checking if the neighboring cells doesn't have bomb.
+//             // (<HTMLButtonElement>document.getElementById(CurrentcoverID)).style.display = "none";
+//             (<HTMLTableCellElement>document.getElementById(CurrentcoverID)).parentElement?.classList.add("checked");
+//             openCoverID.push(CurrentcoverID);
+//         }
+//     }
+//     for( let z=0; z<tempCoverID.length; z++){
+//         if(document.getElementById(tempCoverID[z])?.parentElement?.className == 'cell'){
+//             console.log('true');
+//         }
+//     }
+// }    
 // function openCells(tempCoverID:string[]){
 // }
 // function FurtherExpand(Or:number, Oc:number){
@@ -333,6 +469,20 @@ function Reset() {
 //         }
 //     }
 // }
+// if( d == (tempCoverID.length - 1) ){
+//     for(let z = (tempCoverID.length - 1); z>=0; z--){
+//         // console.log("hey", tempCoverID[z]);
+//         openId = tempCoverID[z];
+//         let openPid = document.getElementById(openId)?.parentElement;
+//         console.log(openPid?.className);
+//         if( openPid?.className == "cell"){
+//             // coverRemove(openId);
+//             console.log("true");
+//         }
+//         else{
+//             console.log("false");
+//             z--;
+//         }
 // c1 = 'cell'+(x-1)+""+(y-1);
 // c2 = 'cell'+(x-1)+""+(y);
 // c3 = 'cell'+(x-1)+""+(y+1);
@@ -470,3 +620,115 @@ function Reset() {
 //     initC.setAttribute('class','three')
 // }   
 //(<HTMLButtonElement>document.getElementById(CurrentcoverID)).style.display = "none";
+// function expCells(Cr:number, Cc:number){
+//     if((Cr>0) && (Cc>0)){
+//         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){
+//             if( !coverIDAr.includes((Cr-1)+'-'+(Cc-1)) ){
+//                 console.log('if works');
+//                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
+//                 // return;
+//             }
+//         }
+//         else{
+//             if( !coverIDAr.includes((Cr-1)+'-'+(Cc-1)) ){
+//                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
+//                 console.log('else works');
+//                 itworks((Cr-1),(Cc-1));
+//             }
+//         }
+//     }
+//     if(Cr>0){
+//         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc))).parentElement?.classList.contains("numberCell")){
+//             if(!coverIDAr.includes((Cr-1)+'-'+(Cc))){
+//                 console.log('if works');
+//                 coverIDAr.push((Cr-1)+'-'+(Cc));
+//                 // return;
+//             }
+//         }
+//         else{
+//             if(!coverIDAr.includes((Cr-1)+'-'+(Cc))){
+//                 coverIDAr.push((Cr-1)+'-'+(Cc));
+//                 console.log('else works');
+//                 itworks((Cr-1),(Cc));
+//             }
+//         }
+//     }
+//     if((Cr>0) && (Cc<cn-1)){
+//         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
+//             if(!coverIDAr.includes((Cr-1)+'-'+(Cc+1))){
+//                 console.log('if works');
+//                 coverIDAr.push((Cr-1)+'-'+(Cc+1));
+//                 // return;
+//             }
+//         }
+//         else{
+//             if(!coverIDAr.includes((Cr-1)+'-'+(Cc+1))){
+//                 coverIDAr.push((Cr-1)+'-'+(Cc+1));
+//                 console.log('else works');
+//                 itworks((Cr-1),(Cc+1));
+//             }
+//         }
+//     }
+//     if(Cc<cn-1) {
+//         if((<HTMLTableCellElement>document.getElementById((Cr)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
+//             if(!coverIDAr.includes((Cr)+'-'+(Cc+1))){
+//                 console.log('if works');
+//                 coverIDAr.push(Cr+'-'+(Cc+1));
+//             // return;
+//             }
+//         }
+//         else{
+//             coverIDAr.push((Cr)+'-'+(Cc+1));
+//             console.log('else works');
+//             itworks((Cr),(Cc+1));
+//         }
+//     }
+//     if((Cr<rn-1) && (Cc<cn-1)){
+//         if((<HTMLTableCellElement>document.getElementById((Cr+1)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
+//             if(!coverIDAr.includes((Cr+1)+'-'+(Cc+1)) ){
+//                 coverIDAr.push((Cr+1)+'-'+(Cc+1));
+//                 // return;
+//             }
+//         }
+//         else{
+//             coverIDAr.push((Cr+1)+'-'+(Cc+1));
+//             itworks((Cr+1),(Cc+1));
+//         }
+//     }
+//     setTimeout(() => {
+//     if(Cr<rn-1){
+//         if((<HTMLTableCellElement>document.getElementById((Cr+1)+'-'+(Cc))).parentElement?.classList.contains("numberCell")){
+//             if(!coverIDAr.includes((Cr+1)+'-'+Cc)){
+//                 coverIDAr.push((Cr+1)+'-'+Cc);
+//                 return;
+//             }
+//         }
+//         else{
+//             coverIDAr.push((Cr+1)+'-'+Cc);
+//             itworks((Cr+1),Cc);
+//         }
+//     }
+// }, 100);
+//     console.log(coverIDAr);
+//     coverRemove(coverIDAr);
+// if((Cr<rn-1) && (Cc>0)){
+//     if((<HTMLTableCellElement>document.getElementById((Cr+1)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){   
+//         coverIDAr.push((Cr+1)+'-'+(Cc-1));
+//         return;
+//     }
+//     else{
+//         coverIDAr.push((Cr+1)+'-'+(Cc-1));
+//         itworks((Cr+1),(Cc-1));
+//     }
+// }
+// if(Cc>0){
+//     if((<HTMLTableCellElement>document.getElementById((Cr)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){
+//         coverIDAr.push(Cr+'-'+(Cc-1));
+//         return;
+//     }
+//     else{
+//         coverIDAr.push(Cr+'-'+(Cc-1));
+//         itworks(Cr,(Cc-1))
+//     }
+// }
+// }
