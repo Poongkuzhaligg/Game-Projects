@@ -65,6 +65,8 @@ function clickBomb() {
             if ((_a = findBcell.parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("bombimg")) {
                 findBcell.style.display = "none";
             }
+            findBcell.onclick = null;
+            findBcell.oncontextmenu = null;
         }
     }
     // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";

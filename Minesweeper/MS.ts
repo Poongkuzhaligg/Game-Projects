@@ -67,6 +67,8 @@ function clickBomb(){
             if( findBcell.parentElement?.classList.contains("bombimg")){
                 findBcell.style.display ="none";
             }
+            findBcell.onclick = null;
+            findBcell.oncontextmenu = null;
         }
     }
     // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
