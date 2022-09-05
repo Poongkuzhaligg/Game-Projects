@@ -23,7 +23,6 @@ function makeTable() {
         rowcell.setAttribute('class', 'cell-cont');
         for(c=0; c< cno; c++)  
         {
-            let f=0;
             colcell = rowcell.insertCell(c);
             colcell.setAttribute('class', 'cell' );
             colcell.setAttribute('id', 'cell'+r+'-'+c );
@@ -35,7 +34,6 @@ function makeTable() {
             CoverBtn.setAttribute("oncontextmenu", "handleRightClick(this.id, event)")
             putB = 'cell'+r+'-'+c;
             bIDAr.push(putB);
-            f++;
         }
     }
     setBomb();
@@ -131,7 +129,7 @@ function setNumber(u:number,v:number){
                     initC.classList.add('numberCell');
                     break;
                 case 2 : 
-                    initC.setAttribute('class', 'one');
+                    initC.setAttribute('class', 'two');
                     initC.classList.add('numberCell');
                     break;
                 case 3 : 
@@ -169,7 +167,7 @@ function handleRightClick(id: string, event: any){
         FlaggedCell.innerHTML = " ";
         FlaggedCell.classList.remove("flagged");
         FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
-        if(parentEl?.className == "bombimg"){ //again checking if the flagged cell is bomb cell if so this condition will replace CLICKEDBOMB onclick func.
+        if(parentEl?.className == "bombimg"){ 
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
             minesFlagged--;
         }
@@ -183,7 +181,7 @@ function handleRightClick(id: string, event: any){
             parentEl?.removeAttribute("onclick");
             minesFlagged++;
             console.log(minesFlagged);
-            if(minesFlagged == mn){ //when minesFlagged is equal to mine number input then user wins.
+            if(minesFlagged == mn){
                 (<HTMLParagraphElement>document.getElementById('gWon')).style.display = "block";
             }
         }

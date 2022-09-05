@@ -126,7 +126,7 @@ function setNumber(u, v) {
                     initC.classList.add('numberCell');
                     break;
                 case 2:
-                    initC.setAttribute('class', 'one');
+                    initC.setAttribute('class', 'two');
                     initC.classList.add('numberCell');
                     break;
                 case 3:
