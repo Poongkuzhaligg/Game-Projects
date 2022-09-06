@@ -1,7 +1,8 @@
-var r:any, c:any, b:any, n:any, cellVal:any, putB:string, minesFlagged:number = 0;
+var r:any, c:any, b:any, n:any, cellVal:any, putB:string, putC:string, minesFlagged:number = 0;
 var rowno = <HTMLInputElement>document.getElementById("rno"), colno = <HTMLInputElement>document.getElementById("cno"), bomb = <HTMLInputElement>document.getElementById("bmb");
 var colcell:HTMLTableCellElement, rowcell:HTMLTableRowElement, bt:HTMLButtonElement, initC:HTMLTableCellElement, CoverBtn:HTMLButtonElement, MinesC:HTMLParagraphElement;
 var bIDAr:string[] = [];
+var cIDAr:string[] = [];
 var bombAr:string[] = [];
 var openCoverID:string[] = [];
 let coverIDAr:string[];
@@ -16,7 +17,6 @@ function makeTable() {
     var rno = rowno.value;
     var cno = colno.value;
     rn = rno; cn = cno;
-    let n:number = 0;
     for(r=0; r< rno; r++)
     {
         rowcell = (<HTMLTableElement>document.getElementById("boxCont")).insertRow(r);
@@ -33,41 +33,48 @@ function makeTable() {
             CoverBtn.setAttribute("onclick", "checkCover(this.id)")
             CoverBtn.setAttribute("oncontextmenu", "handleRightClick(this.id, event)")
             putB = 'cell'+r+'-'+c;
+            putC = r+'-'+c;
             bIDAr.push(putB);
+            cIDAr.push(putC);
         }
     }
     setBomb();
     setNos();
+    console.log("ready");
 }
 
 function setBomb(){
     // console.log(bIDAr);
     var Mno = +(bomb.value);
     mn = Mno;
-        for( let i=0; i<Mno; i++){
+        for( let i=0; i<Mno;){
             mineID = bIDAr[Math.floor(Math.random() * bIDAr.length)];
             if(bombAr.includes(mineID)!= true){
                 bombAr.push(mineID);
                 document.getElementById(mineID)!.setAttribute("class", "bombimg");
-                document.getElementById(mineID)?.setAttribute("onclick", "setTimeout(clickBomb,500)");
+                // document.getElementById(mineID)?.setAttribute("onclick", "setTimeout(clickBomb, 500)");
+                document.getElementById(mineID)?.setAttribute("onclick", "clickBomb()")
+                i++;
                 // console.log(mineID);
             }
-            else{
-                i--;
-            }
+            // else{
+            //     i--;
+            // }
         }    
 }
 
 function clickBomb(){
-    for( let s=0; s<rn; s++){
-        for(let w=0; w<cn; w++){
-            let findBcell = <HTMLButtonElement>document.getElementById(s+'-'+w);
-            if( findBcell.parentElement?.classList.contains("bombimg")){
-                findBcell.style.display ="none";
-            }
-            findBcell.onclick = null;
-            findBcell.oncontextmenu = null;
+    // for( let s=0; s<rn; s++){
+    //     for(let w=0; w<cn; w++){
+    //         console.log(`${s}-${w}`);
+    for( let s=0; s<cIDAr.length; s++){
+        let findB = cIDAr[s];
+        let findBcell = <HTMLButtonElement>document.getElementById(findB);
+        if( findBcell.parentElement?.classList.contains("bombimg")){
+            findBcell.style.display ="none";
         }
+        findBcell.onclick = null;
+        findBcell.oncontextmenu = null;
     }
     // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
     var gameOver = (<HTMLParagraphElement>document.getElementById('gOver')).style.display = "block";
@@ -165,7 +172,7 @@ function handleRightClick(id: string, event: any){
     let parentEl = (<HTMLTableCellElement>document.getElementById(id)).parentElement;
     if(FlaggedCell.innerHTML == "🚩"){ 
         FlaggedCell.innerHTML = " ";
-        FlaggedCell.setAttribute("onclick", "coverRemove(this.id)");
+        FlaggedCell.setAttribute("onclick", "checkCover(this.id)");
         if(parentEl?.className == "bombimg"){ 
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
             minesFlagged--;
@@ -181,13 +188,19 @@ function handleRightClick(id: string, event: any){
             console.log(minesFlagged);
             if(minesFlagged == mn){
                 (<HTMLParagraphElement>document.getElementById('gWon')).style.display = "block";
+                for( let s=0; s<cIDAr.length; s++){
+                    let findB = cIDAr[s];
+                    let findBcell = <HTMLButtonElement>document.getElementById(findB);
+                    findBcell.onclick = null;
+                    findBcell.oncontextmenu = null;
+                }
             }
         }
     }
 }
 
 function checkCover(checkID:string){
-    console.log(checkID);
+    console.log("clicked ID "+checkID);
     coverIDAr = [];
     if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.className == "bombimg"){ 
         (<HTMLButtonElement>document.getElementById(checkID)).style.display = "none"; 
@@ -322,18 +335,20 @@ function expCells(Cr:number, Cc:number){
         else{
             if(!coverIDAr.includes(Cr+'-'+(Cc-1))){
                 coverIDAr.push(Cr+'-'+(Cc-1));
-                expCells(Cr,(Cc-1))
+                expCells(Cr,(Cc-1));
             }
         }
     }
-    console.log(coverIDAr);
     coverRemove(coverIDAr);
 
 }
 
 function coverRemove(coverID:string[]){
+    console.log(coverID);
     for(let z=0; z<coverID.length; z++){
-        (<HTMLButtonElement>document.getElementById(coverID[z])).style.display = "none";
+        console.log(coverID);
+        let zId = coverID[z];
+        (<HTMLButtonElement>document.getElementById(zId)).style.display = "none";
     }
 }
 
