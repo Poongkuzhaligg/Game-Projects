@@ -61,12 +61,20 @@ function setBomb() {
     }
 }
 function clickBomb() {
+    var _a;
     // for( let s=0; s<rn; s++){
     //     for(let w=0; w<cn; w++){
     //         console.log(`${s}-${w}`);
+    for (var s = 0; s < cIDAr.length; s++) {
+        var findB = cIDAr[s];
+        var findBcell = document.getElementById(findB);
+        if ((_a = findBcell.parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("bombimg")) {
+            findBcell.style.display = "none";
+        }
+    }
     stopGame();
     // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
-    document.getElementById('gOver').style.display = "block";
+    var gameOver = document.getElementById('gOver').style.display = "block";
 }
 function setNos() {
     for (var x = 0; x < rn; x++) {
