@@ -73,9 +73,8 @@ function clickBomb(){
         if( findBcell.parentElement?.classList.contains("bombimg")){
             findBcell.style.display ="none";
         }
-        findBcell.onclick = null;
-        findBcell.oncontextmenu = null;
     }
+    stopGame();
     // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
     var gameOver = (<HTMLParagraphElement>document.getElementById('gOver')).style.display = "block";
 }
@@ -187,13 +186,8 @@ function handleRightClick(id: string, event: any){
             minesFlagged++;
             console.log(minesFlagged);
             if(minesFlagged == mn){
+                stopGame();
                 (<HTMLParagraphElement>document.getElementById('gWon')).style.display = "block";
-                for( let s=0; s<cIDAr.length; s++){
-                    let findB = cIDAr[s];
-                    let findBcell = <HTMLButtonElement>document.getElementById(findB);
-                    findBcell.onclick = null;
-                    findBcell.oncontextmenu = null;
-                }
             }
         }
     }
@@ -349,6 +343,15 @@ function coverRemove(coverID:string[]){
         console.log(coverID);
         let zId = coverID[z];
         (<HTMLButtonElement>document.getElementById(zId)).style.display = "none";
+    }
+}
+
+function stopGame(){
+    for( let s=0; s<cIDAr.length; s++){
+        let findB = cIDAr[s];
+        let findBcell = <HTMLButtonElement>document.getElementById(findB);
+        findBcell.onclick = null;
+        findBcell.oncontextmenu = null;
     }
 }
 
