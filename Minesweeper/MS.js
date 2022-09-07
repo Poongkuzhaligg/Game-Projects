@@ -42,7 +42,6 @@ function makeTable() {
 }
 function setBomb() {
     var _a;
-    // console.log(bIDAr);
     var Mno = +(bomb.value);
     mn = Mno;
     for (var i = 0; i < Mno;) {
@@ -53,18 +52,11 @@ function setBomb() {
             // document.getElementById(mineID)?.setAttribute("onclick", "setTimeout(clickBomb, 500)");
             (_a = document.getElementById(mineID)) === null || _a === void 0 ? void 0 : _a.setAttribute("onclick", "clickBomb()");
             i++;
-            // console.log(mineID);
         }
-        // else{
-        //     i--;
-        // }
     }
 }
 function clickBomb() {
     var _a;
-    // for( let s=0; s<rn; s++){
-    //     for(let w=0; w<cn; w++){
-    //         console.log(`${s}-${w}`);
     for (var s = 0; s < cIDAr.length; s++) {
         var findB = cIDAr[s];
         var findBcell = document.getElementById(findB);
@@ -73,7 +65,6 @@ function clickBomb() {
         }
     }
     stopGame();
-    // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
     var gameOver = document.getElementById('gOver').style.display = "block";
 }
 function setNos() {
@@ -81,8 +72,8 @@ function setNos() {
         for (var y = 0; y < cn; y++) {
             initC = document.getElementById('cell' + x + '-' + y);
             console.log(initC);
-            if (initC.className == "bombimg") { //to avoid changing the cell that has bomb.
-                y + 1; //if yes go to the next cell
+            if (initC.className == "bombimg") {
+                y + 1;
             }
             else {
                 setNumber(x, y);
@@ -214,14 +205,12 @@ function expCells(Cr, Cc) {
     if ((Cr > 0) && (Cc > 0)) {
         if ((_a = document.getElementById((Cr - 1) + '-' + (Cc - 1)).parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1))) {
-                // console.log('if works');
                 coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
             }
         }
         else {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1))) {
                 coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
-                // console.log('else works');
                 expCells((Cr - 1), (Cc - 1));
             }
         }
@@ -229,14 +218,12 @@ function expCells(Cr, Cc) {
     if (Cr > 0) {
         if ((_b = document.getElementById((Cr - 1) + '-' + (Cc)).parentElement) === null || _b === void 0 ? void 0 : _b.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc))) {
-                // console.log('if works');
                 coverIDAr.push((Cr - 1) + '-' + (Cc));
             }
         }
         else {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc))) {
                 coverIDAr.push((Cr - 1) + '-' + (Cc));
-                // console.log('else works');
                 expCells((Cr - 1), (Cc));
             }
         }
@@ -244,14 +231,12 @@ function expCells(Cr, Cc) {
     if ((Cr > 0) && (Cc < cn - 1)) {
         if ((_c = document.getElementById((Cr - 1) + '-' + (Cc + 1)).parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc + 1))) {
-                // console.log('if works');
                 coverIDAr.push((Cr - 1) + '-' + (Cc + 1));
             }
         }
         else {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc + 1))) {
                 coverIDAr.push((Cr - 1) + '-' + (Cc + 1));
-                // console.log('else works');
                 expCells((Cr - 1), (Cc + 1));
             }
         }
@@ -259,14 +244,12 @@ function expCells(Cr, Cc) {
     if (Cc < cn - 1) {
         if ((_d = document.getElementById((Cr) + '-' + (Cc + 1)).parentElement) === null || _d === void 0 ? void 0 : _d.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr) + '-' + (Cc + 1))) {
-                // console.log('if works');
                 coverIDAr.push(Cr + '-' + (Cc + 1));
             }
         }
         else {
             if (!coverIDAr.includes((Cr) + '-' + (Cc + 1))) {
                 coverIDAr.push((Cr) + '-' + (Cc + 1));
-                // console.log('else works');
                 expCells((Cr), (Cc + 1));
             }
         }

@@ -44,7 +44,6 @@ function makeTable() {
 }
 
 function setBomb(){
-    // console.log(bIDAr);
     var Mno = +(bomb.value);
     mn = Mno;
         for( let i=0; i<Mno;){
@@ -55,18 +54,11 @@ function setBomb(){
                 // document.getElementById(mineID)?.setAttribute("onclick", "setTimeout(clickBomb, 500)");
                 document.getElementById(mineID)?.setAttribute("onclick", "clickBomb()")
                 i++;
-                // console.log(mineID);
             }
-            // else{
-            //     i--;
-            // }
         }    
 }
 
 function clickBomb(){
-    // for( let s=0; s<rn; s++){
-    //     for(let w=0; w<cn; w++){
-    //         console.log(`${s}-${w}`);
     for( let s=0; s<cIDAr.length; s++){
         let findB = cIDAr[s];
         let findBcell = <HTMLButtonElement>document.getElementById(findB);
@@ -75,7 +67,6 @@ function clickBomb(){
         }
     }
     stopGame();
-    // (<HTMLTableElement>document.getElementById("boxCont")).style.display = "none";
     var gameOver = (<HTMLParagraphElement>document.getElementById('gOver')).style.display = "block";
 }
 
@@ -84,8 +75,8 @@ function setNos(){
         for(let y=0; y<cn; y++ ){
             initC = <HTMLTableCellElement>document.getElementById('cell'+x+'-'+y);
             console.log(initC);
-            if(initC.className == "bombimg"){ //to avoid changing the cell that has bomb.
-                y+1;  //if yes go to the next cell
+            if(initC.className == "bombimg"){ 
+                y+1;  
             }
             else {
                 setNumber(x,y);
@@ -221,14 +212,12 @@ function expCells(Cr:number, Cc:number){
     if((Cr>0) && (Cc>0)){
         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){ 
             if( !coverIDAr.includes((Cr-1)+'-'+(Cc-1)) ){ 
-                // console.log('if works');
                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
             }
         }
         else{ 
             if( !coverIDAr.includes((Cr-1)+'-'+(Cc-1)) ){
                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
-                // console.log('else works');
                 expCells((Cr-1),(Cc-1));
             }
         }
@@ -236,14 +225,12 @@ function expCells(Cr:number, Cc:number){
     if(Cr>0){
         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr-1)+'-'+(Cc))){
-                // console.log('if works');
                 coverIDAr.push((Cr-1)+'-'+(Cc));
             }
         }
         else{
             if(!coverIDAr.includes((Cr-1)+'-'+(Cc))){
                 coverIDAr.push((Cr-1)+'-'+(Cc));
-                // console.log('else works');
                 expCells((Cr-1),(Cc));
             }
         }
@@ -251,14 +238,12 @@ function expCells(Cr:number, Cc:number){
     if((Cr>0) && (Cc<cn-1)){
         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr-1)+'-'+(Cc+1))){
-                // console.log('if works');
                 coverIDAr.push((Cr-1)+'-'+(Cc+1));
             }
         }
         else{
             if(!coverIDAr.includes((Cr-1)+'-'+(Cc+1))){
                 coverIDAr.push((Cr-1)+'-'+(Cc+1));
-                // console.log('else works');
                 expCells((Cr-1),(Cc+1));
             }
         }
@@ -266,14 +251,12 @@ function expCells(Cr:number, Cc:number){
     if(Cc<cn-1) {
         if((<HTMLTableCellElement>document.getElementById((Cr)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr)+'-'+(Cc+1))){
-                // console.log('if works');
                 coverIDAr.push(Cr+'-'+(Cc+1));
             }
         }
         else{
             if(!coverIDAr.includes((Cr)+'-'+(Cc+1))){
                 coverIDAr.push((Cr)+'-'+(Cc+1));
-                // console.log('else works');
                 expCells((Cr),(Cc+1));
             }
         }
