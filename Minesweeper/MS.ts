@@ -162,10 +162,13 @@ function handleRightClick(id: string, event: any){
     let parentEl = (<HTMLTableCellElement>document.getElementById(id)).parentElement;
     if(FlaggedCell.innerHTML == "🚩"){ 
         FlaggedCell.innerHTML = " ";
-        FlaggedCell.setAttribute("onclick", "checkCover(this.id)");
+        // FlaggedCell.setAttribute("onclick", "checkCover(this.id)");
         if(parentEl?.className == "bombimg"){ 
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
             minesFlagged--;
+        }
+        else if(parentEl?.className == "cell" || parentEl?.className == "numbercell"){
+            FlaggedCell.setAttribute("onclick", "checkCover(this.id)");
         }
     }
 

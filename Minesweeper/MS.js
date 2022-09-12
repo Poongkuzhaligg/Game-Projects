@@ -161,6 +161,9 @@ function handleRightClick(id, event) {
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
             minesFlagged--;
         }
+        else if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "cell" || (parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "numbercell") {
+            FlaggedCell.setAttribute("onclick", "checkCover(this.id)");
+        }
     }
     else {
         FlaggedCell.innerHTML = "🚩";

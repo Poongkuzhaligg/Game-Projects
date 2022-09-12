@@ -91,7 +91,7 @@ body{
 
 .bombimg {
     background-color: rgb(210, 206, 206);
-    background-image: url('./miness.png');
+    background-image: url('./bombImg.png');
     background-repeat: no-repeat;
     background-position: center;
     border: 1px solid rgb(209, 209, 209);
