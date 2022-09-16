@@ -156,7 +156,6 @@ function handleRightClick(id, event) {
     var parentEl = document.getElementById(id).parentElement;
     if (FlaggedCell.innerHTML == "🚩") {
         FlaggedCell.innerHTML = " ";
-        FlaggedCell.setAttribute("onclick", "checkCover(this.id)");
         if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") {
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
             minesFlagged--;
@@ -167,7 +166,6 @@ function handleRightClick(id, event) {
     }
     else {
         FlaggedCell.innerHTML = "🚩";
-        FlaggedCell.removeAttribute('onclick');
         if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "bombimg") {
             parentEl === null || parentEl === void 0 ? void 0 : parentEl.removeAttribute("onclick");
             minesFlagged++;
@@ -176,6 +174,9 @@ function handleRightClick(id, event) {
                 stopGame();
                 document.getElementById('gWon').style.display = "block";
             }
+        }
+        else if ((parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "cell" || (parentEl === null || parentEl === void 0 ? void 0 : parentEl.className) == "numbercell") {
+            FlaggedCell.removeAttribute("onclick");
         }
     }
 }
@@ -194,7 +195,7 @@ function checkCover(checkID) {
         return;
     }
     if ((_c = document.getElementById(checkID).parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("cell")) {
-        console.log('It is a cell');
+        // console.log('It is a cell');
         coverIDAr.push(checkID);
         var tempID = checkID.split('-');
         var Crn = +tempID[0];
@@ -209,6 +210,7 @@ function expCells(Cr, Cc) {
         if ((_a = document.getElementById((Cr - 1) + '-' + (Cc - 1)).parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc - 1))) {
                 coverIDAr.push((Cr - 1) + '-' + (Cc - 1));
+                return;
             }
         }
         else {
@@ -222,6 +224,7 @@ function expCells(Cr, Cc) {
         if ((_b = document.getElementById((Cr - 1) + '-' + (Cc)).parentElement) === null || _b === void 0 ? void 0 : _b.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc))) {
                 coverIDAr.push((Cr - 1) + '-' + (Cc));
+                return;
             }
         }
         else {
@@ -235,6 +238,7 @@ function expCells(Cr, Cc) {
         if ((_c = document.getElementById((Cr - 1) + '-' + (Cc + 1)).parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr - 1) + '-' + (Cc + 1))) {
                 coverIDAr.push((Cr - 1) + '-' + (Cc + 1));
+                return;
             }
         }
         else {
@@ -248,6 +252,7 @@ function expCells(Cr, Cc) {
         if ((_d = document.getElementById((Cr) + '-' + (Cc + 1)).parentElement) === null || _d === void 0 ? void 0 : _d.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr) + '-' + (Cc + 1))) {
                 coverIDAr.push(Cr + '-' + (Cc + 1));
+                return;
             }
         }
         else {
@@ -261,6 +266,7 @@ function expCells(Cr, Cc) {
         if ((_e = document.getElementById((Cr + 1) + '-' + (Cc + 1)).parentElement) === null || _e === void 0 ? void 0 : _e.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr + 1) + '-' + (Cc + 1))) {
                 coverIDAr.push((Cr + 1) + '-' + (Cc + 1));
+                return;
             }
         }
         else {
@@ -274,6 +280,7 @@ function expCells(Cr, Cc) {
         if ((_f = document.getElementById((Cr + 1) + '-' + (Cc)).parentElement) === null || _f === void 0 ? void 0 : _f.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr + 1) + '-' + Cc)) {
                 coverIDAr.push((Cr + 1) + '-' + Cc);
+                return;
             }
         }
         else {
@@ -287,6 +294,7 @@ function expCells(Cr, Cc) {
         if ((_g = document.getElementById((Cr + 1) + '-' + (Cc - 1)).parentElement) === null || _g === void 0 ? void 0 : _g.classList.contains("numberCell")) {
             if (!coverIDAr.includes((Cr + 1) + '-' + (Cc - 1))) {
                 coverIDAr.push((Cr + 1) + '-' + (Cc - 1));
+                return;
             }
         }
         else {
@@ -300,6 +308,7 @@ function expCells(Cr, Cc) {
         if ((_h = document.getElementById((Cr) + '-' + (Cc - 1)).parentElement) === null || _h === void 0 ? void 0 : _h.classList.contains("numberCell")) {
             if (!coverIDAr.includes(Cr + '-' + (Cc - 1))) {
                 coverIDAr.push(Cr + '-' + (Cc - 1));
+                return;
             }
         }
         else {

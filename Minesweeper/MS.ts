@@ -162,7 +162,6 @@ function handleRightClick(id: string, event: any){
     let parentEl = (<HTMLTableCellElement>document.getElementById(id)).parentElement;
     if(FlaggedCell.innerHTML == "🚩"){ 
         FlaggedCell.innerHTML = " ";
-        // FlaggedCell.setAttribute("onclick", "checkCover(this.id)");
         if(parentEl?.className == "bombimg"){ 
             parentEl.setAttribute("onclick", "setTimeout(clickBomb,500)");
             minesFlagged--;
@@ -174,7 +173,6 @@ function handleRightClick(id: string, event: any){
 
     else{
         FlaggedCell.innerHTML = "🚩";
-        FlaggedCell.removeAttribute('onclick');
         if(parentEl?.className == "bombimg"){  
             parentEl?.removeAttribute("onclick");
             minesFlagged++;
@@ -183,6 +181,9 @@ function handleRightClick(id: string, event: any){
                 stopGame();
                 (<HTMLParagraphElement>document.getElementById('gWon')).style.display = "block";
             }
+        }
+        else if(parentEl?.className == "cell" || parentEl?.className == "numbercell"){
+            FlaggedCell.removeAttribute("onclick");
         }
     }
 }
@@ -201,7 +202,7 @@ function checkCover(checkID:string){
         return;
     }
     if((<HTMLButtonElement>document.getElementById(checkID)).parentElement?.classList.contains("cell")){ 
-        console.log('It is a cell');
+        // console.log('It is a cell');
         coverIDAr.push(checkID);
         var tempID = checkID.split('-');
         let Crn = +tempID[0];
@@ -216,6 +217,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){ 
             if( !coverIDAr.includes((Cr-1)+'-'+(Cc-1)) ){ 
                 coverIDAr.push((Cr-1)+'-'+(Cc-1));
+                return;
             }
         }
         else{ 
@@ -229,6 +231,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr-1)+'-'+(Cc))){
                 coverIDAr.push((Cr-1)+'-'+(Cc));
+                return;
             }
         }
         else{
@@ -242,6 +245,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr-1)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr-1)+'-'+(Cc+1))){
                 coverIDAr.push((Cr-1)+'-'+(Cc+1));
+                return;
             }
         }
         else{
@@ -255,6 +259,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr)+'-'+(Cc+1))){
                 coverIDAr.push(Cr+'-'+(Cc+1));
+                return;
             }
         }
         else{
@@ -268,6 +273,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr+1)+'-'+(Cc+1))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr+1)+'-'+(Cc+1)) ){
                 coverIDAr.push((Cr+1)+'-'+(Cc+1));
+                return;
             }
         }
         else{
@@ -282,6 +288,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr+1)+'-'+(Cc))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes((Cr+1)+'-'+Cc)){
                 coverIDAr.push((Cr+1)+'-'+Cc);
+                return;
             }
         }
         else{
@@ -296,6 +303,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr+1)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){   
             if(!coverIDAr.includes((Cr+1)+'-'+(Cc-1))){
                 coverIDAr.push((Cr+1)+'-'+(Cc-1));
+                return;
             }
         }
         else{
@@ -310,6 +318,7 @@ function expCells(Cr:number, Cc:number){
         if((<HTMLTableCellElement>document.getElementById((Cr)+'-'+(Cc-1))).parentElement?.classList.contains("numberCell")){
             if(!coverIDAr.includes(Cr+'-'+(Cc-1))){
                 coverIDAr.push(Cr+'-'+(Cc-1));
+                return;
             }
         }
         else{
