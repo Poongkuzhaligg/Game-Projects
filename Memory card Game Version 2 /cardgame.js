@@ -92,7 +92,7 @@ function openCard(){
         }
         else {
             console.log("Not matched"); 
-            hideCardOne(); 
+            setTimeout(hideCardOne, 500); 
             setTimeout(hideCardTwo, 500); 
         }
     }
