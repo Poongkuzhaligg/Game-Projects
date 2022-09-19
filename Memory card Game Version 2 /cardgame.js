@@ -7,15 +7,12 @@ let table = document.getElementById('container');
 function rowncol() {
     rno = document.getElementById("rno").value;
     cno = document.getElementById("cno").value;
-
     if( rno != cno) {
         alert("Enter same rows and columns!!");
     }
-
     if((rno%2)== 1 && (cno%2) == 1) {
         alert("Enter even numbers only!!");
     }
-
     else if (rno===cno) {
         console.log(rno);
         console.log(cno);
@@ -40,11 +37,11 @@ function createTable() {
     RPairImgs.sort( () => 0.5 - Math.random() );
     console.log(RPairImgs);
     n = 0;
-    for(var r=0; r<(rno);r++)
+    for(let r=0; r<(rno);r++)
     {
      rowcell = table.insertRow(r);
      rowcell.setAttribute('class', 'cell-cont');
-     for(var c=0;c<(cno);c++)  
+     for(let c=0;c<(cno);c++)  
         {
             colcell =  rowcell.insertCell(c);
             colcell.setAttribute('class', 'cell' );
@@ -99,7 +96,6 @@ function openCard(){
             setTimeout(hideCardTwo, 500); 
         }
     }
-
     if(matchedAr.length == (rno*cno)){
         setTimeout(() => {
             document.getElementById("gameOver").style.display = "block";
@@ -114,15 +110,12 @@ function disappearCardOne() {
 function disappearCardTwo() {
     Card2.style.display = "none";
 }
-
 function hideCardOne() {
     cardOneEl.style.display = "none";
-
 }
 function hideCardTwo() {
     cardTwoEl.style.display = "none";
 }
-
 function reloadgame() {
     window.location.reload();
 }
