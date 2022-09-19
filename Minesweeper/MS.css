@@ -91,9 +91,10 @@ body{
 
 .bombimg {
     background-color: rgb(210, 206, 206);
-    background-image: url('./bombImg.png');
+    background-image: url('./bomb_1f4a3.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
     border: 1px solid rgb(209, 209, 209);
 }
 
@@ -122,45 +123,52 @@ body{
 }
 
 .one{
-    background-image: url('./one.png');
+    background-image: url('./1.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
 }
 
 .two{
-    background-image: url('./two.png');
+    background-image: url('./2.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
 }
 
 .three{
-    background-image: url('./three.png');
+    background-image: url('./3.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
 }
 
 .four{
-    background-image: url('./four.png');
+    background-image: url('./4.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
 }
 
 .five{
-    background-image: url('./five.png');
+    background-image: url('./5.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
 }
 
 .six{
-    background-image: url('./six.png');
+    background-image: url('./6.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
 }
 
 .seven{
-    background-image: url('./seven.png');
+    background-image: url('./7.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-size:30px;
 }
 
 

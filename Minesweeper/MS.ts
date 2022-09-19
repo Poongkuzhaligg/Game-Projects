@@ -67,7 +67,7 @@ function clickBomb(){
         }
     }
     stopGame();
-    var gameOver = (<HTMLParagraphElement>document.getElementById('gOver')).style.display = "block";
+    (<HTMLParagraphElement>document.getElementById('gOver')).style.display = "block";
 }
 
 function setNos(){
