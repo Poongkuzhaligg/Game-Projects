@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MEMORY CARD GAME</title>
     <link rel="stylesheet" href="cardgame.css">
 </head>
 
@@ -13,21 +13,22 @@
     <section class = lables>
 
         <label for ="rows"  id="roww" class="LableRC">Enter the rows : </label>
-        <input type="number" class="InputRC"  name="rows" min="2" max="10" id ="rno" > 
+        <input type="number" class="InputRC"  name="rows" min="2" max="10" value="2" id ="rno" > 
         <label for ="columns" class="LableRC" id="col">Enter the columns : </label>
-        <input type="number" class="InputRC" name="column" min="2" max="10" id ="cno" >
+        <input type="number" class="InputRC" name="column" min="2" max="10" value="2" id ="cno" >
     <section>
         <button type="submit" class="button" id="btn" onclick="rowncol()">SUBMIT</button>
         <button type="reset" class="button" id="reset" onclick="reloadgame()">PLAY AGAIN</button>
     </section>
     </section>
     
+    <div id="gameOver">🥳 CONGRATS YOU WON! </div>
 
-    <table id="container"  border="1" ></table>
+    <table id="container"  ></table>
     <!-- <div id="container" ></div> -->
     
 
-    <div id="check"></div>
+    
     <script src="cardgame.js"></script>
 </body>
 

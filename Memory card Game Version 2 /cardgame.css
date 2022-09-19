@@ -1,7 +1,7 @@
-body{
+html{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-image: linear-gradient(to top, rgb(178, 201, 213), rgb(255, 255, 255));
-    height: fit-content;
+    background: linear-gradient( rgb(178, 201, 213), rgb(255, 255, 255) );
+    background-repeat: no-repeat ;
 }
 
 #heading {
@@ -14,18 +14,15 @@ body{
 #container {
     width: fit-content;
     height: fit-content;
-    border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    margin-top: 120px;
+    margin-top: 160px;
     margin-bottom: 120px;
-    background-color: rgb(120, 58, 124);
 }
 
 .cell-cont {
     height: 100px;
-    background-image: linear-gradient(to top, rgb(255, 205, 205), rgb(249, 255, 207));
 }
 
 
@@ -77,10 +74,19 @@ body{
 }
 
 .cell {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
+    border: 2px solid black;
+    background-image: linear-gradient( rgb(235, 219, 255), rgb(255, 231, 194));
+    cursor:pointer;
 }
 
+.Hid-img {
+    display: none;
+    padding-left: 30px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease-out;
+}
 
 
 #roww
@@ -93,4 +99,12 @@ body{
 
 }
 
+#gameOver{
+    display: none;
+    color:rgba(134, 36, 245, 0.859);
+    margin-top: 150px;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bolder;
+}
 

@@ -1,7 +1,8 @@
-var cno, rno, colcell, rowcell, img;
-var imgpos, hasClicked, n;
+var cno, rno, colcell, rowcell, img, cardOneEl, cardTwoEl, Card1, Card2;
+var imgpos, hasClicked, n, matchedAr = [];
 var count = 0;
-var table = document.getElementById('container');
+var hasclicked;
+let table = document.getElementById('container');
 
 function rowncol() {
     rno = document.getElementById("rno").value;
@@ -23,7 +24,6 @@ function rowncol() {
         console.log(count);
         if(count == 1) {
             document.getElementById("btn").onclick = null;
-            // table.removeChild(rowcell(r).colcell(c));
         }
     }
 
@@ -41,7 +41,6 @@ function createTable() {
     RPairImgs = [].concat(...Array(2).fill(candyImgs));
     RPairImgs.sort( () => 0.5 - Math.random() );
     console.log(RPairImgs);
-
     n = 0;
     for(var r=0; r<(rno);r++)
     {
@@ -58,16 +57,73 @@ function createTable() {
             img.setAttribute('class', 'Hid-img');    
             img.setAttribute('id', 'RI-'+n);
             n++;
+            colcell.addEventListener('click', openCard);
         }
     }
 }
 
+function openCard(){
+    var CurrentCard = document.getElementById(this.id);
+    var imgCard = CurrentCard.firstChild;
+    imgCard.style.display = "block";
+    console.log(imgCard.src.toString())
+    if(!hasclicked ){
+        hasclicked = true;
+        cardOne = imgCard.src.toString();  
+        cardOneId = imgCard.id;
+        cardOneEl = imgCard; 
+        Card1 = CurrentCard;
+        console.log(hasclicked); 
+    }
+    else {
+        hasclicked = false;
+        cardTwo = imgCard.src.toString();  
+        cardTwoId = imgCard.id;
+        cardTwoEl = imgCard; 
+        Card2 = CurrentCard;
+        console.log(hasclicked); 
 
+        if(cardOneId == cardTwoId) { 
+            alert("you clicked the same card!");
+            hideCardOne();
+            return;
+        }
+        else if(cardOne === cardTwo){ 
+            console.log("Cards are matched");
+            matchedAr.push(cardOneId,cardTwoId);
+            setTimeout (disappearCardOne, 500);
+            setTimeout (disappearCardTwo, 500);
+            console.log(matchedAr);
+        }
+        else {
+            console.log("Not matched"); 
+            hideCardOne(); 
+            setTimeout(hideCardTwo, 500); 
+        }
+    }
 
+    if(matchedAr.length == (rno*cno)){
+        setTimeout(() => {
+            document.getElementById("gameOver").style.display = "block";
+        }, 500);
+        console.log("Game over!");
+    }
+}
 
+function disappearCardOne () {
+    Card1.style.display = "none";
+}
+function disappearCardTwo () {
+    Card2.style.display = "none";
+}
 
+function hideCardOne() {
+    cardOneEl.style.display = "none";
 
-
+}
+function hideCardTwo() {
+    cardTwoEl.style.display = "none";
+}
 
 function reloadgame() {
     window.location.reload();
