@@ -86,8 +86,8 @@ function openCard(){
         else if(cardOne === cardTwo){ 
             console.log("Cards are matched");
             matchedAr.push(cardOneId,cardTwoId);
-            setTimeout (disappearCardOne, 300);
-            setTimeout (disappearCardTwo, 300);
+            // setTimeout (disappearCardOne, 300);
+            // setTimeout (disappearCardTwo, 300);
             console.log(matchedAr);
         }
         else {
@@ -104,12 +104,12 @@ function openCard(){
     }
 }
 
-function disappearCardOne() {
-    Card1.style.display = "none";
-}
-function disappearCardTwo() {
-    Card2.style.display = "none";
-}
+// function disappearCardOne() {
+//     Card1.style.display = "none";
+// }
+// function disappearCardTwo() {
+//     Card2.style.display = "none";
+// }
 function hideCardOne() {
     cardOneEl.style.display = "none";
 }

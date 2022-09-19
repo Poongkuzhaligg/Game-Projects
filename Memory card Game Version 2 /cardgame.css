@@ -17,8 +17,9 @@ html{
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    margin-top: 160px;
-    margin-bottom: 120px;
+    margin-top: 170px;
+    margin-bottom: 50px;
+
 }
 
 .cell-cont {
@@ -40,12 +41,11 @@ html{
 
 .lables {
     background-color: rgba(72, 102, 189, 0.478);
-    width: 600px;
+    width: 500px;
     margin: auto;
     height: 80px;
     padding-top: 15px;
     text-align: center; 
-    border: 0px;
     border-radius: 50px;
     color: rgb(226, 255, 109);
     font-weight: 500;
@@ -55,7 +55,7 @@ html{
 
 .button {
     width: 85px;
-    height: 85px;
+    height: 65px;
     border-radius: 50px;
     margin-top: 40px;
     border: 0;
@@ -70,22 +70,21 @@ html{
     width: 112px;
     margin-left: 40px;
     font-size:medium;
-    font-weight:bolder ;
+    font-weight:bolder;
 }
 
 .cell {
     width: 160px;
     height: 160px;
     border: 2px solid black;
-    background-image: linear-gradient( rgb(235, 219, 255), rgb(255, 231, 194));
+    background-image: linear-gradient( rgb(241, 248, 228), rgb(194, 244, 255));
     cursor:pointer;
 }
 
 .Hid-img {
     display: none;
     padding-left: 30px;
-    /* transform-style: preserve-3d;
-    transition: transform 0.5s ease-out; */
+
 }
 
 
@@ -101,8 +100,9 @@ html{
 
 #gameOver{
     display: none;
-    color:rgba(119, 82, 161, 0.859);
-    margin-top: 150px;
+    color:rgba(255, 255, 255, 0.859);
+    text-shadow: 0 0 2px #042ea1, 0 0 8px #6239f7;
+    margin-top: 25px;
     text-align: center;
     font-size: xx-large;
     font-weight: bolder;

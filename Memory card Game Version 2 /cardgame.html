@@ -12,19 +12,21 @@
     <h1 id="heading">MEMORY CARD GAME</h1>
     <section class = lables>
 
-        <label for ="rows"  id="roww" class="LableRC">Enter the rows : </label>
+        <label for ="rows"  id="roww" class="LableRC">Enter rows : </label>
         <input type="number" class="InputRC"  name="rows" min="2" max="10" value="2" id ="rno" > 
-        <label for ="columns" class="LableRC" id="col">Enter the columns : </label>
+        <label for ="columns" class="LableRC" id="col">Enter columns : </label>
         <input type="number" class="InputRC" name="column" min="2" max="10" value="2" id ="cno" >
     <section>
         <button type="submit" class="button" id="btn" onclick="rowncol()">SUBMIT</button>
         <button type="reset" class="button" id="reset" onclick="reloadgame()">PLAY AGAIN</button>
+
     </section>
+    <div id="gameOver">CONGRATS YOU WON! </div>
+
     </section>
     
-    <div id="gameOver">🥳 CONGRATS YOU WON! 💐 </div>
-
     <table id="container"  ></table>
+
     <!-- <div id="container" ></div> -->
     
 
