@@ -84,8 +84,8 @@ html{
 .Hid-img {
     display: none;
     padding-left: 30px;
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease-out;
+    /* transform-style: preserve-3d;
+    transition: transform 0.5s ease-out; */
 }
 
 
@@ -101,7 +101,7 @@ html{
 
 #gameOver{
     display: none;
-    color:rgba(134, 36, 245, 0.859);
+    color:rgba(119, 82, 161, 0.859);
     margin-top: 150px;
     text-align: center;
     font-size: xx-large;

@@ -1,4 +1,4 @@
-var cno, rno, colcell, rowcell, img, cardOneEl, cardTwoEl, Card1, Card2;
+var cno, rno, colcell, rowcell, img, cardOneEl, cardTwoEl, Card1, Card2, cardOne, cardTwo, cardOneId, cardTwoId;
 var imgpos, hasClicked, n, matchedAr = [];
 var count = 0;
 var hasclicked;
@@ -26,8 +26,6 @@ function rowncol() {
             document.getElementById("btn").onclick = null;
         }
     }
-
-
 }
 
 function createTable() {
@@ -91,8 +89,8 @@ function openCard(){
         else if(cardOne === cardTwo){ 
             console.log("Cards are matched");
             matchedAr.push(cardOneId,cardTwoId);
-            setTimeout (disappearCardOne, 500);
-            setTimeout (disappearCardTwo, 500);
+            setTimeout (disappearCardOne, 300);
+            setTimeout (disappearCardTwo, 300);
             console.log(matchedAr);
         }
         else {
@@ -105,15 +103,15 @@ function openCard(){
     if(matchedAr.length == (rno*cno)){
         setTimeout(() => {
             document.getElementById("gameOver").style.display = "block";
-        }, 500);
+        }, 400);
         console.log("Game over!");
     }
 }
 
-function disappearCardOne () {
+function disappearCardOne() {
     Card1.style.display = "none";
 }
-function disappearCardTwo () {
+function disappearCardTwo() {
     Card2.style.display = "none";
 }
 
