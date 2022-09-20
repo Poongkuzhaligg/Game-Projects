@@ -92,8 +92,8 @@ function openCard(){
         }
         else {
             console.log("Not matched"); 
-            setTimeout(hideCardOne, 500); 
-            setTimeout(hideCardTwo, 500); 
+            setTimeout(hideCardOne, 300); 
+            setTimeout(hideCardTwo, 300); 
         }
     }
     if(matchedAr.length == (rno*cno)){
