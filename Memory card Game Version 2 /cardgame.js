@@ -100,6 +100,7 @@ function openCard(){
         setTimeout(() => {
             document.getElementById("gameOver").style.display = "block";
         }, 400);
+        alert("Game over!");
         console.log("Game over!");
     }
 }
