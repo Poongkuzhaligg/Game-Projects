@@ -26,10 +26,10 @@ function rowncol() {
 }
 
 function createTable() {
-    let candyImgs = ['./apple.png', './bubtea.webp', './cheesecake.webp','./candy.png', './chicken.png', './chococake.png', './burger.webp', './corn.png', 
-    './choco.webp', './cupcake.png', './donut.png', './eggs.png','./frsalad.png', './icecream.png', './macaroon.png', './soup.png', './shake.png', './Tencoco.png',
-    './samosa.webp', './sandwich.png','./watmel.png', './toff.png','./cottoncandy.png', './pastta.png', './pizza.png', './taco.png',
-    './popcorn.png', './jelly.png','./lolipop.png', './marsh.png', './mint.png', './cane.png', './heartcandy.png', './fries.png'];
+    let candyImgs = ['./pics/apple.png', './pics/bubtea.webp', './pics/cheesecake.webp','./pics/candy.png', './pics/chicken.png', './pics/chococake.png', './pics/burger.webp', './pics/corn.png', 
+    './pics/choco.webp', './pics/cupcake.png', './pics/donut.png', './pics/eggs.png','./pics/frsalad.png', './pics/icecream.png', './pics/macaroon.png', './pics/soup.png', './pics/shake.png', 
+    './pics/samosa.webp', './pics/sandwich.png','./pics/watmel.png', './pics/toff.png','./pics/cottoncandy.png', './pics/pastta.png', './pics/pizza.png', './pics/taco.png', './pics/Tencoco.png',
+    './pics/popcorn.png', './pics/jelly.png','./pics/lolipop.png', './pics/marsh.png', './pics/mint.png', './pics/cane.png', './pics/heartcandy.png', './pics/fries.png'];
     var RPairImgs = [];
     candyImgs.length = (rno*cno)/2;
     RPairImgs.length = (rno*cno)/2;
