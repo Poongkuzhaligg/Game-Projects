@@ -74,8 +74,8 @@ html{
 }
 
 .cell {
-    width: 160px;
-    height: 160px;
+    width: 100px;
+    height: 100px;
     border: 2px solid black;
     background-image: linear-gradient( rgb(241, 248, 228), rgb(194, 244, 255));
     cursor:pointer;
@@ -83,8 +83,9 @@ html{
 
 .Hid-img {
     display: none;
-    padding-left: 30px;
-
+    padding-left: 12px;
+    width: 80px;
+    height:80px;
 }
 
 

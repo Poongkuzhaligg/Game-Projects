@@ -86,6 +86,9 @@ function openCard(){
         else if(cardOne === cardTwo){ 
             console.log("Cards are matched");
             matchedAr.push(cardOneId,cardTwoId);
+            Card1.removeEventListener("click", openCard);
+            Card2.removeEventListener("click", openCard);
+
             // setTimeout (disappearCardOne, 300);
             // setTimeout (disappearCardTwo, 300);
             console.log(matchedAr);
@@ -99,8 +102,8 @@ function openCard(){
     if(matchedAr.length == (rno*cno)){
         setTimeout(() => {
             document.getElementById("gameOver").style.display = "block";
+            alert("Game over!");
         }, 400);
-        alert("Game over!");
         console.log("Game over!");
     }
 }
